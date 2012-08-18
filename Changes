@@ -1,0 +1,9 @@
+Revision history for Perl extension WWW::NOS::Open.
+
+0.02  Thu Jan  13 21:54:02 2011
+    -improved documentation and refactoring
+    - dates can now also be DateTime objects
+    - fixed RT#64456, RT#64468, RT#64480
+
+0.01  Mon Jan  03 22:54:02 2011
+    - original version

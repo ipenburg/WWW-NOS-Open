@@ -1,8 +1,14 @@
 Revision history for Perl extension WWW::NOS::Open.
 
-0.100
-Sat Oct 20 17:18:18 UTC 2012
-TODO
+0.100 Sat Oct 20 17:18:18 UTC 2012
+    - TODO
+    - Added github repository to meta data
+    - Switched version control from subversion to Github
+      <https://github.com/ipenburg/WWW-NOS-Open>
+    - Refactored from ExtUtils::MakeMaker to Module::Build
+    - refactored to 5.12 package name version syntax
+    - Bumped minimal perl to 5.14 to get unicode right
+
 0.02  Thu Jan  13 21:54:02 2011
     -improved documentation and refactoring
     - dates can now also be DateTime objects

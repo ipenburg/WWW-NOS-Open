@@ -1,16 +1,9 @@
-package WWW::NOS::Open;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
-# $Id: Open.pm 414 2011-01-13 22:43:18Z roland $
-# $Revision: 414 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/lib/WWW/NOS/Open.pm $
-# $Date: 2011-01-13 23:43:18 +0100 (Thu, 13 Jan 2011) $
-
 use utf8;
-use 5.006000;
-
-our $VERSION = '0.02';
+use 5.014000;
 
 use Date::Calc qw(Add_Delta_Days Date_to_Days Delta_Days Today);
 use Date::Format;
@@ -43,7 +36,7 @@ use WWW::NOS::Open::Video;
 use Readonly;
 Readonly::Scalar my $SERVER => $ENV{NOSOPEN_SERVER} || q{http://open.nos.nl};
 Readonly::Scalar my $TIMEOUT       => 15;
-Readonly::Scalar my $AGENT         => q{WWW::NOS::Open/} . $VERSION;
+Readonly::Scalar my $AGENT         => q{WWW::NOS::Open/} . $WWW::NOS::Open::VERSION;
 Readonly::Scalar my $DATE_FORMAT   => q{%04u-%02u-%02u};
 Readonly::Scalar my $DEFAULT_START => -1;                            # Yesterday
 Readonly::Scalar my $DEFAULT_END   => 1;                             # Tomorrow
@@ -428,7 +421,7 @@ L<Open NOS|http://open.nos.nl/> REST API.
 
 =head1 VERSION
 
-This document describes WWW::NOS::Open version 0.02.
+This document describes WWW::NOS::Open version 0.100.
 
 =head1 SYNOPSIS
 

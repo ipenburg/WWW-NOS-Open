@@ -1,5 +1,5 @@
-WWW::NOS::Open version 0.01
-=======================================================
+WWW::NOS::Open version 0.100
+============================
 
 This is a framework that makes makes data from the Open NOS REST API
 <http://open.nos.nl/> available in Perl.
@@ -69,7 +69,7 @@ This module requires these other modules and libraries:
 
 COPYRIGHT AND LICENCE
 
-Copyright 2011 Roland van Ipenburg
+Copyright 2012 Roland van Ipenburg
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.12.2 or,

@@ -1,16 +1,9 @@
-package WWW::NOS::Open::Version;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Version 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
-# $Id: Version.pm 408 2011-01-06 20:53:25Z roland $
-# $Revision: 408 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/lib/WWW/NOS/Open/Version.pm $
-# $Date: 2011-01-06 21:53:25 +0100 (Thu, 06 Jan 2011) $
-
 use utf8;
-use 5.006000;
-
-our $VERSION = '0.02';
+use 5.014000;
 
 use Moose qw/around has/;
 use namespace::autoclean -also => qr/^__/sxm;
@@ -61,7 +54,7 @@ L<Open NOS|http://open.nos.nl/> REST API.
 
 =head1 VERSION
 
-This document describes WWW::NOS::Open version 0.02.
+This document describes WWW::NOS::Open version 0.100.
 
 =head1 SYNOPSIS
 

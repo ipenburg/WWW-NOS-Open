@@ -2,15 +2,10 @@
 use strict;
 use warnings;
 
-# $Id: TestNOSOpen.pl 405 2011-01-04 23:55:37Z roland $
-# $Revision: 405 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/scripts/TestNOSOpen.pl $
-# $Date: 2011-01-05 00:55:37 +0100 (Wed, 05 Jan 2011) $
-
 use utf8;
-use 5.006000;
+use 5.014000;
 
-our $VERSION = '0.01';
+our $VERSION = '0.100';
 
 use CGI qw/:all/;
 use HTTP::Server::Brick;

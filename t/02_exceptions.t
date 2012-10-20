@@ -1,8 +1,3 @@
-# $Id: 02_exceptions.t 408 2011-01-06 20:53:25Z roland $
-# $Revision: 408 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/t/02_exceptions.t $
-# $Date: 2011-01-06 21:53:25 +0100 (Thu, 06 Jan 2011) $
-
 use strict;
 use warnings;
 

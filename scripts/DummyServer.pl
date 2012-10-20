@@ -2,15 +2,10 @@
 use strict;
 use warnings;
 
-# $Id: DummyServer.pl 407 2011-01-06 01:06:07Z roland $
-# $Revision: 407 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/scripts/DummyServer.pl $
-# $Date: 2011-01-06 02:06:07 +0100 (Thu, 06 Jan 2011) $
-
 use utf8;
-use 5.006000;
+use 5.014000;
 
-our $VERSION = '0.01';
+our $VERSION = '0.100';
 
 use CGI qw/:all/;
 use Getopt::Long;

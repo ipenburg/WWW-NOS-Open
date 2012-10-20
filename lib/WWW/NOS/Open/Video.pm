@@ -1,16 +1,9 @@
-package WWW::NOS::Open::Video;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Video 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
-# $Id: Video.pm 414 2011-01-13 22:43:18Z roland $
-# $Revision: 414 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/lib/WWW/NOS/Open/Video.pm $
-# $Date: 2011-01-13 23:43:18 +0100 (Thu, 13 Jan 2011) $
-
 use utf8;
-use 5.006000;
-
-our $VERSION = '0.02';
+use 5.014000;
 
 use Moose qw/extends/;
 use namespace::autoclean -also => qr/^__/sxm;
@@ -38,7 +31,7 @@ L<Open NOS|http://open.nos.nl/> REST API.
 
 =head1 VERSION
 
-This document describes WWW::NOS::Open::Video version 0.02.
+This document describes WWW::NOS::Open::Video version 0.100.
 
 =head1 SYNOPSIS
 

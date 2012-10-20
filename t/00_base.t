@@ -1,8 +1,3 @@
-# $Id: 00_base.t 382 2010-12-14 18:12:26Z roland $
-# $Revision: 382 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/t/00_base.t $
-# $Date: 2010-12-14 19:12:26 +0100 (Tue, 14 Dec 2010) $
-
 use Test::More;
 use Test::NoWarnings;
 

@@ -1,8 +1,3 @@
-# $Id: 11_test-coverage.t 389 2010-12-26 14:46:40Z roland $
-# $Revision: 389 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/t/11_test-coverage.t $
-# $Date: 2010-12-26 15:46:40 +0100 (Sun, 26 Dec 2010) $
-
 use Test::More;
 eval "use Test::TestCoverage 0.08";
 plan skip_all => "Test::TestCoverage 0.08 required for testing test coverage"

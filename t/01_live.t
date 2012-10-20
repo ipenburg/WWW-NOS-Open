@@ -1,8 +1,3 @@
-# $Id: 01_live.t 389 2010-12-26 14:46:40Z roland $
-# $Revision: 389 $
-# $HeadURL: svn+ssh://ipenburg.xs4all.nl/srv/svnroot/candi/trunk/WWW-NOS-Open/t/01_live.t $
-# $Date: 2010-12-26 15:46:40 +0100 (Sun, 26 Dec 2010) $
-
 use strict;
 use warnings;
 

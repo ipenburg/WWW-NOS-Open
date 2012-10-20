@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w    # -*- cperl; cperl-indent-level: 4 -*-
+#!/usr/bin/env perl    # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -29,17 +29,16 @@ Readonly::Scalar my $STRIP_QUERY     => qr{^/\?}sxm;
 
 Readonly::Array my @GETOPT_CONFIG =>
   qw(no_ignore_case bundling auto_version auto_help);
-Readonly::Array my @GETOPTIONS =>
-  ( q{port|p=s}, q{help|h}, q{verbose|v+}, );
+Readonly::Array my @GETOPTIONS => ( q{port|p=s}, q{help|h}, q{verbose|v+}, );
 Readonly::Hash my %OPTS_DEFAULT => ( port => $CONNECTOR_PORT, );
 Readonly::Hash my %OUTPUT => (
-    json => q{application/json},
-    xml  => q{text/xml},
-    php  => q{text/plain},
+    'json' => q{application/json},
+    'xml'  => q{text/xml},
+    'php'  => q{text/plain},
 );
 Readonly::Hash my %RESPONSE => (
-    version => {
-        json => q{{
+    'version' => {
+        'json' => q{{
     "version": [
         {
             "version": "v1",
@@ -47,18 +46,18 @@ Readonly::Hash my %RESPONSE => (
         }
     ]   
         }},
-        xml => q{<?xml version="1.0" encoding="UTF-8"?>
+        'xml' => q{<?xml version="1.0" encoding="UTF-8"?>
 <list type="version" itemcount="1">
     <item>
         <version><![CDATA[v1]]></version>
         <build><![CDATA[0.0.1]]></build>
     </item>
 </list>},
-        php =>
+        'php' =>
 q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1";}}}},
     },
     latest_article => {
-        json => q{{
+        'json' => q{{
 "latest_article": [
     [
         {
@@ -101,7 +100,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
         }
     ]
 ]}},
-        xml => q{<?xml version="1.0" encoding="UTF-8"?>
+        'xml' => q{<?xml version="1.0" encoding="UTF-8"?>
 <list  type="article" itemcount="10">
     <article>
         <id>175418</id>
@@ -124,7 +123,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
 </list>},
     },
     latest_video => {
-        json => q{{
+        'json' => q{{
     "latest_video": [
         [
             {
@@ -169,7 +168,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
     ]
    ]
 }},
-        xml => q{<?xml version="1.0" encoding="UTF-8"?>
+        'xml' => q{<?xml version="1.0" encoding="UTF-8"?>
 <list type="latest_video" itemcount="2">
     <video>
         <id>175327</id>
@@ -213,7 +212,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
 </list>},
     },
     latest_audio => {
-        json => q{{
+        'json' => q{{
     "latest_audio": [
         [
             {
@@ -258,7 +257,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
         ]
     ]
         }},
-        xml => q{<?xml version="1.0" encoding="UTF-8"?>
+        'xml' => q{<?xml version="1.0" encoding="UTF-8"?>
 <list type="latest_audio" itemcount="2">
     <audio>
         <id>175384</id>
@@ -301,8 +300,8 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
     </audio>
 </list>},
     },
-    search => {
-        json => q{{
+    'search' => {
+        'json' => q{{
     "search":[
         {
             "documents":[
@@ -344,7 +343,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
         }
     ]
         }},
-        xml => q{<?xml version="1.0" encoding="UTF-8"?>
+        'xml' => q{<?xml version="1.0" encoding="UTF-8"?>
 <list type="search" itemcount="1">
     <documents>
         <document>
@@ -380,7 +379,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
 </list>},
     },
     guide_radio => {
-        json => q{{
+        'json' => q{{
     guide: [
         [
             {
@@ -432,7 +431,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
         ]
     ]
         }},
-        xml => q{<?xml version="1.0" encoding="UTF-8"?>
+        'xml' => q{<?xml version="1.0" encoding="UTF-8"?>
 <list type="guide" daycount="2" itemcount="60">
     <dayguide type="radio" date="2010-10-06">
         <item>
@@ -477,8 +476,8 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
 </list>
         },
     },
-    guide_tv => {
-        json => q{{
+    'guide_tv' => {
+        'json' => q{{
     "guide": [
         [
             {
@@ -542,7 +541,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
         ]
     ]
         }},
-        xml => q{<?xml version="1.0" encoding="UTF-8"?>
+        'xml' => q{<?xml version="1.0" encoding="UTF-8"?>
 <list type="guide" daycount="2" itemcount="60">
 <dayguide type="tv" date="2010-10-06">
 <item>
@@ -601,13 +600,13 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
     },
 );
 Readonly::Hash my %ERROR => (
-    bad_request_missing =>
+    'bad_request_missing' =>
       q{{"badrequest":{"error":{"code":101,"message":"API-key not found"}}}},
-    bad_request_invalid =>
+    'bad_request_invalid' =>
 q{{"wrong param value":{"error":{"code":"111","message":"Param output must be of value (php,xml,json)"}}}},
-    unauthorized =>
+    'unauthorized' =>
 q{{"unauthorized, invalid key":{"error":{"code":201,"message":"Invalid key"}}}},
-    forbidden =>
+    'forbidden' =>
 q{{"forbidden, rate limit":{"error":{"code":301,"message":"Rate limit, max requests per minute is set at 60"}}}},
 );
 ## use critic
@@ -651,8 +650,9 @@ sub main {
     if ( $param{key} ne $API_KEY ) {
         $res->header( 'Status',
             HTTP_UNAUTHORIZED . $SPACE . status_message(HTTP_UNAUTHORIZED) );
-        # TODO: This also sets the content, which we don't want:
-        # (this is a TODO in HTTP::Server::Brick, so fixing it there is the way to go)
+
+  # TODO: This also sets the content, which we don't want:
+  # (this is a TODO in HTTP::Server::Brick, so fixing it there is the way to go)
         $res->code(HTTP_UNAUTHORIZED);
         $res->add_content_utf8( $ERROR{unauthorized} );
     }

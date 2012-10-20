@@ -1,4 +1,5 @@
-package WWW::NOS::Open::MediaResource 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+# -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::MediaResource 0.100;
 use strict;
 use warnings;
 
@@ -6,15 +7,15 @@ use utf8;
 use 5.014000;
 
 use Moose qw/extends has/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 extends 'WWW::NOS::Open::Resource';
 
 has '_embedcode' => (
-    is       => 'ro',
-    isa      => 'Str',
-    reader   => 'get_embedcode',
-    init_arg => 'embedcode',
+    'is'       => 'ro',
+    'isa'      => 'Str',
+    'reader'   => 'get_embedcode',
+    'init_arg' => 'embedcode',
 );
 
 no Moose;
@@ -120,9 +121,15 @@ of strings.
 
 =head1 DEPENDENCIES
 
-L<Moose|Moose>
-L<WWW::NOS::Open::Resource|WWW::NOS::Open::Resource>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<Moose|Moose>
+
+=item * L<WWW::NOS::Open::Resource|WWW::NOS::Open::Resource>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

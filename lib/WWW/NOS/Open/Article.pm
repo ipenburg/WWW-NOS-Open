@@ -6,7 +6,7 @@ use utf8;
 use 5.014000;
 
 use Moose qw/extends/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 extends 'WWW::NOS::Open::Resource';
 
@@ -101,8 +101,13 @@ strings.
 
 =head1 DEPENDENCIES
 
-L<Moose|Moose>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<Moose|Moose>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

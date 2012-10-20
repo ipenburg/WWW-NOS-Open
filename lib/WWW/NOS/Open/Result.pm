@@ -6,20 +6,20 @@ use utf8;
 use 5.014000;
 
 use Moose qw/has/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 has '_documents' => (
-    is       => 'ro',
-    isa      => 'ArrayRef[WWW::NOS::Open::Document]',
-    reader   => 'get_documents',
-    init_arg => 'documents',
+    'is'       => 'ro',
+    'isa'      => 'ArrayRef[WWW::NOS::Open::Document]',
+    'reader'   => 'get_documents',
+    'init_arg' => 'documents',
 );
 
 has '_related' => (
-    is       => 'ro',
-    isa      => 'ArrayRef[Str]',
-    reader   => 'get_related',
-    init_arg => 'related',
+    'is'       => 'ro',
+    'isa'      => 'ArrayRef[Str]',
+    'reader'   => 'get_related',
+    'init_arg' => 'related',
 );
 
 no Moose;
@@ -71,9 +71,15 @@ array of strings.
 
 =head1 DEPENDENCIES
 
-L<Moose|Moose>
-L<WWW::NOS::Open::Document|WWW::NOS::Open::Document>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<Moose|Moose>
+
+=item * L<WWW::NOS::Open::Document|WWW::NOS::Open::Document>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

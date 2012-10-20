@@ -6,7 +6,7 @@ use utf8;
 use 5.014000;
 
 use Moose qw/around has/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 use Readonly;
 Readonly::Scalar my $UNDER  => q{_};
@@ -16,20 +16,20 @@ my @strings = qw(version build);
 while ( my $string = shift @strings ) {
     has $UNDER
       . $string => (
-        is       => 'ro',
-        isa      => 'Str',
-        reader   => $GETTER . $UNDER . $string,
-        init_arg => $string,
+        'is'       => 'ro',
+        'isa'      => 'Str',
+        'reader'   => $GETTER . $UNDER . $string,
+        'init_arg' => $string,
       );
 }
 
-around BUILDARGS => sub {
+around 'BUILDARGS' => sub {
     my $orig  = shift;
     my $class = shift;
     my ( $version, $build ) = @_;
     return $class->$orig(
-        version => $version,
-        build   => $build,
+        'version' => $version,
+        'build'   => $build,
     );
 };
 
@@ -86,8 +86,13 @@ Returns the build number as string.
 
 =head1 DEPENDENCIES
 
-L<Moose|Moose>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<Moose|Moose>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

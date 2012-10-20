@@ -1,4 +1,5 @@
-package WWW::NOS::Open::AudioFragment 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+# -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::AudioFragment 0.100;
 use strict;
 use warnings;
 
@@ -6,7 +7,7 @@ use utf8;
 use 5.014000;
 
 use Moose qw/extends/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 extends 'WWW::NOS::Open::MediaResource';
 
@@ -108,9 +109,15 @@ of strings.
 
 =head1 DEPENDENCIES
 
-L<Moose|Moose>
-L<namespace::autoclean|namespace::autoclean>
-L<WWW::NOS::Open::MediaResource|WWW::NOS::Open::MediaResource>
+=over 4
+
+=item * L<Moose|Moose>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=item * L<WWW::NOS::Open::MediaResource|WWW::NOS::Open::MediaResource>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

@@ -1,4 +1,4 @@
-package WWW::NOS::Open::Resource 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Resource 0.100;   # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -8,7 +8,7 @@ use 5.014000;
 use Moose qw/has/;
 use Moose::Util::TypeConstraints qw/enum/;
 use MooseX::Types::Moose qw/Undef/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 use WWW::NOS::Open::TypeDef qw(NOSDateTime NOSURI);
 
@@ -20,20 +20,20 @@ Readonly::Array my @THUMBS         => qw(xs s m);
 Readonly::Array my @RESOURCE_TYPES => qw(article video audio);
 
 has '_id' => (
-    is       => 'ro',
-    isa      => 'Int',
-    reader   => 'get_id',
-    init_arg => 'id',
+    'is'       => 'ro',
+    'isa'      => 'Int',
+    'reader'   => 'get_id',
+    'init_arg' => 'id',
 );
 
 my @types = qw(type);
 while ( my $type = shift @types ) {
     has $UNDER
       . $type => (
-        is       => 'ro',
-        isa      => enum( [@RESOURCE_TYPES] ),
-        reader   => $GETTER . $UNDER . $type,
-        init_arg => $type,
+        'is'       => 'ro',
+        'isa'      => enum( [@RESOURCE_TYPES] ),
+        'reader'   => $GETTER . $UNDER . $type,
+        'init_arg' => $type,
       );
 }
 
@@ -41,10 +41,10 @@ my @strings = qw(title description);
 while ( my $string = shift @strings ) {
     has $UNDER
       . $string => (
-        is       => 'ro',
-        isa      => 'Str',
-        reader   => $GETTER . $UNDER . $string,
-        init_arg => $string,
+        'is'       => 'ro',
+        'isa'      => 'Str',
+        'reader'   => $GETTER . $UNDER . $string,
+        'init_arg' => $string,
       );
 }
 
@@ -52,11 +52,11 @@ my @dates = qw(published last_update);
 while ( my $date = shift @dates ) {
     has $UNDER
       . $date => (
-        is       => 'ro',
-        isa      => NOSDateTime,
-        coerce   => 1,
-        reader   => $GETTER . $UNDER . $date,
-        init_arg => $date,
+        'is'       => 'ro',
+        'isa'      => NOSDateTime,
+        'coerce'   => 1,
+        'reader'   => $GETTER . $UNDER . $date,
+        'init_arg' => $date,
       );
 }
 
@@ -65,21 +65,21 @@ push @uris, q{link};
 while ( my $uri = shift @uris ) {
     has $UNDER
       . $uri => (
-        is       => 'ro',
-        isa      => NOSURI | Undef,
-        coerce   => 1,
-        reader   => $GETTER . $UNDER . $uri,
-        init_arg => $uri,
+        'is'       => 'ro',
+        'isa'      => NOSURI || Undef,
+        'coerce'   => 1,
+        'reader'   => $GETTER . $UNDER . $uri,
+        'init_arg' => $uri,
       );
 }
 
 has '_keywords' => (
-    traits   => ['Array'],
-    is       => 'ro',
-    isa      => 'ArrayRef[Str]',
-    default  => sub { [] },
-    reader   => 'get_keywords',
-    init_arg => 'keywords',
+    'traits'   => ['Array'],
+    'is'       => 'ro',
+    'isa'      => 'ArrayRef[Str]',
+    'default'  => sub { [] },
+    'reader'   => 'get_keywords',
+    'init_arg' => 'keywords',
 );
 
 no Moose;
@@ -205,11 +205,19 @@ strings.
 
 =head1 DEPENDENCIES
 
-L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
-L<Moose|Moose>
-L<Readonly|Readonly>
-L<WWW::NOS::Open::TypeDef|WWW::NOS::Open::TypeDef>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
+
+=item * L<Moose|Moose>
+
+=item * L<Readonly|Readonly>
+
+=item * L<WWW::NOS::Open::TypeDef|WWW::NOS::Open::TypeDef>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

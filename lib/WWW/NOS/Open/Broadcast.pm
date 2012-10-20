@@ -1,4 +1,4 @@
-package WWW::NOS::Open::Broadcast 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Broadcast 0.100;  # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -7,7 +7,7 @@ use 5.014000;
 
 use Moose qw/around has with/;
 use Moose::Util::TypeConstraints qw/enum/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 use WWW::NOS::Open::TypeDef qw(NOSDateTime NOSURI);
 
@@ -18,47 +18,47 @@ Readonly::Array my @TV_CHANNEL_CODES    => qw(NL1 NL2 NL3);
 Readonly::Array my @RADIO_CHANNEL_CODES => qw(RA1 RA2 RA3 RA4 RA5 RA6);
 
 has '_id' => (
-    is       => 'ro',
-    isa      => 'Int',
-    reader   => 'get_id',
-    init_arg => 'id',
+    'is'       => 'ro',
+    'isa'      => 'Int',
+    'reader'   => 'get_id',
+    'init_arg' => 'id',
 );
 
 has '_channel_icon' => (
-    is       => 'ro',
-    isa      => NOSURI,
-    coerce   => 1,
-    reader   => 'get_channel_icon',
-    init_arg => 'channel_icon',
+    'is'       => 'ro',
+    'isa'      => NOSURI,
+    'coerce'   => 1,
+    'reader'   => 'get_channel_icon',
+    'init_arg' => 'channel_icon',
 );
 
 my @dates = qw(starttime endtime);
 while ( my $date = shift @dates ) {
     has $UNDER
       . $date => (
-        is       => 'ro',
-        isa      => NOSDateTime,
-        coerce   => 1,
-        reader   => $GETTER . $UNDER . $date,
-        init_arg => $date,
+        'is'       => 'ro',
+        'isa'      => NOSDateTime,
+        'coerce'   => 1,
+        'reader'   => $GETTER . $UNDER . $date,
+        'init_arg' => $date,
       );
 }
 
 has '_channel_code' => (
-    is       => 'ro',
-    isa      => enum( [ @TV_CHANNEL_CODES, @RADIO_CHANNEL_CODES ] ),
-    reader   => 'get_channel_code',
-    init_arg => 'channel_code',
+    'is'       => 'ro',
+    'isa'      => enum( [ @TV_CHANNEL_CODES, @RADIO_CHANNEL_CODES ] ),
+    'reader'   => 'get_channel_code',
+    'init_arg' => 'channel_code',
 );
 
 my @strings = qw(type channel_name genre title description);
 while ( my $string = shift @strings ) {
     has $UNDER
       . $string => (
-        is       => 'ro',
-        isa      => 'Str',
-        reader   => $GETTER . $UNDER . $string,
-        init_arg => $string,
+        'is'       => 'ro',
+        'isa'      => 'Str',
+        'reader'   => $GETTER . $UNDER . $string,
+        'init_arg' => $string,
       );
 }
 
@@ -151,12 +151,21 @@ strings.
 
 =head1 DEPENDENCIES
 
-L<DateTime|DateTime>
-L<Date::Parse|Date::Parse>
-L<URI|URI>
-L<Moose|Moose>
-L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<DateTime|DateTime>
+
+=item * L<Date::Parse|Date::Parse>
+
+=item * L<URI|URI>
+
+=item * L<Moose|Moose>
+
+=item * L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

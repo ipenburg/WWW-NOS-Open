@@ -1,4 +1,4 @@
-package WWW::NOS::Open::DayGuide 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::DayGuide 0.100;   # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -7,7 +7,7 @@ use 5.014000;
 
 use Moose qw/around has with/;
 use Moose::Util::TypeConstraints qw/enum/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 use WWW::NOS::Open::TypeDef qw(NOSDateTime NOSURI);
 
@@ -15,25 +15,25 @@ use Readonly;
 Readonly::Array my @GUIDE_TYPES => qw(tv radio);
 
 has '_type' => (
-    is       => 'ro',
-    isa      => enum( [@GUIDE_TYPES] ),
-    reader   => 'get_type',
-    init_arg => 'type',
+    'is'       => 'ro',
+    'isa'      => enum( [@GUIDE_TYPES] ),
+    'reader'   => 'get_type',
+    'init_arg' => 'type',
 );
 
 has '_date' => (
-    is       => 'ro',
-    isa      => NOSDateTime,
-    coerce   => 1,
-    reader   => 'get_date',
-    init_arg => 'date',
+    'is'       => 'ro',
+    'isa'      => NOSDateTime,
+    'coerce'   => 1,
+    'reader'   => 'get_date',
+    'init_arg' => 'date',
 );
 
-has _broadcasts => (
-    is       => 'ro',
-    isa      => 'ArrayRef[WWW::NOS::Open::Broadcast]',
-    reader   => 'get_broadcasts',
-    init_arg => 'broadcasts',
+has '_broadcasts' => (
+    'is'       => 'ro',
+    'isa'      => 'ArrayRef[WWW::NOS::Open::Broadcast]',
+    'reader'   => 'get_broadcasts',
+    'init_arg' => 'broadcasts',
 );
 
 no Moose;
@@ -97,9 +97,15 @@ L<WWW::NOS::Open::Broadcast|WWW::NOS::Open::Broadcast> objects.
 
 =head1 DEPENDENCIES
 
-L<Moose|Moose>
-L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<Moose|Moose>
+
+=item * L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

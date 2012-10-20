@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w    # -*- cperl; cperl-indent-level: 4 -*-
+#!/usr/bin/env perl    # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -16,9 +16,8 @@ use Pod::Usage;
 use WWW::NOS::Open;
 
 use Readonly;
-## no critic qw(ProhibitCallsToUnexportedSubs)
 Readonly::Scalar my $CONNECTOR_PORT => 8081;
-Readonly::Scalar my $API_KEY        => $ENV{NOSOPEN_API_KEY} || q{TEST};
+Readonly::Scalar my $API_KEY        => $ENV{'NOSOPEN_API_KEY'} || q{TEST};
 Readonly::Scalar my $TITLE          => q{NOS Open test page};
 Readonly::Scalar my $EMPTY          => q{};
 Readonly::Scalar my $ROOT           => q{/};
@@ -27,23 +26,22 @@ Readonly::Scalar my $SLASH          => q{/};
 Readonly::Array my @GETOPT_CONFIG =>
   qw(no_ignore_case bundling auto_version auto_help);
 Readonly::Array my @GETOPTIONS => ( q{port|p=s}, q{help|h}, q{verbose|v+}, );
-Readonly::Hash my %OPTS_DEFAULT => ( port => $CONNECTOR_PORT, );
-## use critic
+Readonly::Hash my %OPTS_DEFAULT => ( 'port' => $CONNECTOR_PORT, );
 
 Getopt::Long::Configure(@GETOPT_CONFIG);
 my %opts = %OPTS_DEFAULT;
 Getopt::Long::GetOptions( \%opts, @GETOPTIONS ) or Pod::Usage::pod2usage(2);
 
-my $server = HTTP::Server::Brick->new( port => $opts{port} );
+my $server = HTTP::Server::Brick->new( 'port' => $opts{'port'} );
 my $nos = WWW::NOS::Open->new($API_KEY);
 my $nos_version =
   $nos->get_version->get_version . $SLASH . $nos->get_version->get_build;
 
 $server->mount(
     $ROOT => {
-        handler  => \&main,
-        wildcard => 1,
-    }
+        'handler'  => \&main,
+        'wildcard' => 1,
+    },
 );
 
 my $css = <<'EOC';
@@ -75,10 +73,10 @@ sub main {
 
     $res->add_content_utf8(
         $q->start_html(
-            -title    => $q->escapeHTML($TITLE),
-            -style    => { -code => $css },
-            -encoding => q{utf-8},
-        )
+            '-title'    => $q->escapeHTML($TITLE),
+            '-style'    => { '-code' => $css },
+            '-encoding' => q{utf-8},
+        ),
     );
     $res->add_content_utf8( $q->p( $q->escapeHTML($nos_version) ) );
 
@@ -87,9 +85,9 @@ sub main {
     while ( my $article = shift @latest_articles ) {
         $res->add_content_utf8(
             $q->h2(
-                { -id => q{id} . $q->escapeHTML( $article->get_id ) },
-                $q->escapeHTML( $article->get_title )
-            )
+                { '-id' => q{id} . $q->escapeHTML( $article->get_id ) },
+                $q->escapeHTML( $article->get_title ),
+            ),
         );
         $res->add_content_utf8(
             $q->p( $q->escapeHTML( $article->get_description ) ) );
@@ -99,27 +97,27 @@ sub main {
             $q->p( $q->escapeHTML( $article->get_last_update ) ) );
         $res->add_content_utf8(
             $q->a(
-                { -href => $q->escapeHTML( $article->get_link ) },
+                { '-href' => $q->escapeHTML( $article->get_link ) },
                 $q->img(
-                    { -src => $q->escapeHTML( $article->get_thumbnail_xs ) }
-                )
-            )
+                    { '-src' => $q->escapeHTML( $article->get_thumbnail_xs ) },
+                ),
+            ),
         );
         $res->add_content_utf8(
             $q->a(
-                { -href => $q->escapeHTML( $article->get_link ) },
+                { '-href' => $q->escapeHTML( $article->get_link ) },
                 $q->img(
-                    { -src => $q->escapeHTML( $article->get_thumbnail_s ) }
-                )
-            )
+                    { '-src' => $q->escapeHTML( $article->get_thumbnail_s ) },
+                ),
+            ),
         );
         $res->add_content_utf8(
             $q->a(
-                { -href => $q->escapeHTML( $article->get_link ) },
+                { '-href' => $q->escapeHTML( $article->get_link ) },
                 $q->img(
-                    { -src => $q->escapeHTML( $article->get_thumbnail_m ) }
-                )
-            )
+                    { '-src' => $q->escapeHTML( $article->get_thumbnail_m ) },
+                ),
+            ),
         );
         if ( my @keywords = @{ $article->get_keywords } ) {
             $res->add_content_utf8(
@@ -132,9 +130,9 @@ sub main {
     while ( my $video = shift @latest_videos ) {
         $res->add_content_utf8(
             $q->h2(
-                { -id => q{id} . $q->escapeHTML( $video->get_id ) },
-                $q->escapeHTML( $video->get_title )
-            )
+                { '-id' => q{id} . $q->escapeHTML( $video->get_id ) },
+                $q->escapeHTML( $video->get_title ),
+            ),
         );
         $res->add_content_utf8(
             $q->p( $q->escapeHTML( $video->get_description ) ) );
@@ -145,27 +143,27 @@ sub main {
             $q->p( $q->escapeHTML( $video->get_last_update ) ) );
         $res->add_content_utf8(
             $q->a(
-                { -href => $q->escapeHTML( $video->get_link ) },
+                { '-href' => $q->escapeHTML( $video->get_link ) },
                 $q->img(
-                    { -src => $q->escapeHTML( $video->get_thumbnail_xs ) }
-                )
-            )
+                    { '-src' => $q->escapeHTML( $video->get_thumbnail_xs ) },
+                ),
+            ),
         );
         $res->add_content_utf8(
             $q->a(
-                { -href => $q->escapeHTML( $video->get_link ) },
+                { '-href' => $q->escapeHTML( $video->get_link ) },
                 $q->img(
-                    { -src => $q->escapeHTML( $video->get_thumbnail_s ) }
-                )
-            )
+                    { '-src' => $q->escapeHTML( $video->get_thumbnail_s ) },
+                ),
+            ),
         );
         $res->add_content_utf8(
             $q->a(
-                { -href => $q->escapeHTML( $video->get_link ) },
+                { '-href' => $q->escapeHTML( $video->get_link ) },
                 $q->img(
-                    { -src => $q->escapeHTML( $video->get_thumbnail_m ) }
-                )
-            )
+                    { '-src' => $q->escapeHTML( $video->get_thumbnail_m ) },
+                ),
+            ),
         );
 
         if ( my @keywords = @{ $video->get_keywords } ) {
@@ -181,9 +179,9 @@ sub main {
     while ( my $audio_fragment = shift @latest_audio_fragments ) {
         $res->add_content_utf8(
             $q->h2(
-                { -id => q{id} . $q->escapeHTML( $audio_fragment->get_id ) },
-                $q->escapeHTML( $audio_fragment->get_title )
-            )
+                { '-id' => q{id} . $q->escapeHTML( $audio_fragment->get_id ) },
+                $q->escapeHTML( $audio_fragment->get_title ),
+            ),
         );
         $res->add_content_utf8(
             $q->p( $q->escapeHTML( $audio_fragment->get_description ) ) );
@@ -194,16 +192,16 @@ sub main {
             $q->p( $q->escapeHTML( $audio_fragment->get_last_update ) ) );
         $res->add_content_utf8(
             $q->a(
-                { -href => $q->escapeHTML( $audio_fragment->get_link ) },
+                { '-href' => $q->escapeHTML( $audio_fragment->get_link ) },
                 $audio_fragment->get_thumbnail_s
                 ? $q->img(
                     {
-                        -src =>
-                          $q->escapeHTML( $audio_fragment->get_thumbnail_s )
-                    }
+                        '-src' =>
+                          $q->escapeHTML( $audio_fragment->get_thumbnail_s ),
+                    },
                   )
-                : $q->escapeHTML( $audio_fragment->get_title )
-            )
+                : $q->escapeHTML( $audio_fragment->get_title ),
+            ),
         );
         if ( my @keywords = @{ $audio_fragment->get_keywords } ) {
             $res->add_content_utf8(
@@ -214,11 +212,11 @@ sub main {
     my $result  = $nos->search(q{cricket});
     my @results = @{ $result->get_documents };
     my @related = @{ $result->get_related };
-    while ( my $result = shift @results ) {
+    while ( my $result_item = shift @results ) {
         $res->add_content_utf8(
-            $q->h3( $q->escapeHTML( $result->get_title ) ) );
+            $q->h3( $q->escapeHTML( $result_item->get_title ) ) );
         $res->add_content_utf8(
-            $q->p( $q->escapeHTML( $result->get_description ) ) );
+            $q->p( $q->escapeHTML( $result_item->get_description ) ) );
     }
     while ( my $relation = shift @related ) {
         $res->add_content_utf8( $q->span( $q->escapeHTML($relation) ) );
@@ -239,10 +237,12 @@ sub main {
             $res->add_content_utf8(
                 $q->img(
                     {
-                        -src => $q->escapeHTML( $broadcast->get_channel_icon ),
-                        -alt => $q->escapeHTML( $broadcast->get_channel_name )
-                    }
-                )
+                        '-src' =>
+                          $q->escapeHTML( $broadcast->get_channel_icon ),
+                        '-alt' =>
+                          $q->escapeHTML( $broadcast->get_channel_name ),
+                    },
+                ),
             );
             $res->add_content_utf8(
                 $q->p( $q->escapeHTML( $broadcast->get_channel_code ) ) );
@@ -275,10 +275,12 @@ sub main {
             $res->add_content_utf8(
                 $q->img(
                     {
-                        -src => $q->escapeHTML( $broadcast->get_channel_icon ),
-                        -alt => $q->escapeHTML( $broadcast->get_channel_name )
-                    }
-                )
+                        '-src' =>
+                          $q->escapeHTML( $broadcast->get_channel_icon ),
+                        '-alt' =>
+                          $q->escapeHTML( $broadcast->get_channel_name ),
+                    },
+                ),
             );
             $res->add_content_utf8(
                 $q->p( $q->escapeHTML( $broadcast->get_channel_code ) ) );
@@ -297,7 +299,7 @@ sub main {
 
     $res->add_content_utf8( $q->end_html );
 
-    $res->header( 'Content-Type', 'application/xhtml+xml; charset=utf-8' );
+    $res->header( 'Content-Type', 'text/html; charset=utf-8' );
     return 1;
 }
 
@@ -313,7 +315,7 @@ __END__
 
 =head1 VERSION
 
-This document describes C<TestNOSOpen.pl> version 0.01
+This document describes C<TestNOSOpen.pl> version 0.100
 
 =head1 USAGE
 
@@ -339,11 +341,19 @@ None.
 
 =head1 DEPENDENCIES
 
-L<CGI|CGI>
-L<Getopt::Long|Getopt::Long>
-L<HTTP::Server::Brick|HTTP::Server::Brick>
-L<Pod::Usage|Pod::Usage>
-L<Readonly|Readonly>
+=over 4
+
+=item * L<CGI|CGI>
+
+=item * L<Getopt::Long|Getopt::Long>
+
+=item * L<HTTP::Server::Brick|HTTP::Server::Brick>
+
+=item * L<Pod::Usage|Pod::Usage>
+
+=item * L<Readonly|Readonly>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

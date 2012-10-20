@@ -9,19 +9,20 @@ use DateTime;
 use Date::Parse;
 use Moose qw/around has with/;
 use Moose::Util::TypeConstraints qw/as coerce from where subtype via/;
-use MooseX::Types -declare => [qw(NOSURI NOSDateTime)];
+use MooseX::Types '-declare' => [qw(NOSURI NOSDateTime)];
 use MooseX::Types::Moose qw/Str/;
 use URI;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 ## no critic qw(ProhibitCallsToUndeclaredSubs)
-class_type NOSURI, { class => 'URI' };
+class_type NOSURI, { 'class' => 'URI' };
 coerce NOSURI, from Str, via { URI->new($_) };
 
-class_type NOSDateTime, { class => 'DateTime' };
+class_type NOSDateTime, { 'class' => 'DateTime' };
 coerce NOSDateTime,
 ## use critic
-  from Str, via { DateTime->from_epoch( epoch => Date::Parse::str2time($_) ) };
+  from Str,
+  via { DateTime->from_epoch( 'epoch' => Date::Parse::str2time($_) ) };
 
 no Moose;
 
@@ -58,14 +59,25 @@ This document describes WWW::NOS::Open::TypeDef version 0.100.
 
 =head1 DEPENDENCIES
 
-L<DateTime|DateTime>
-L<Date::Parse|Date::Parse>
-L<Moose|Moose>
-L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
-L<MooseX::Types|MooseX::Types>
-L<MooseX::Types::Moose|MooseX::Types::Moose>
-L<URI|URI>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<DateTime|DateTime>
+
+=item * L<Date::Parse|Date::Parse>
+
+=item * L<Moose|Moose>
+
+=item * L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
+
+=item * L<MooseX::Types|MooseX::Types>
+
+=item * L<MooseX::Types::Moose|MooseX::Types::Moose>
+
+=item * L<URI|URI>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

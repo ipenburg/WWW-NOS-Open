@@ -1,4 +1,4 @@
-package WWW::NOS::Open::Document 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Document 0.100;   # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -7,7 +7,7 @@ use 5.014000;
 
 use Moose qw/has/;
 use Moose::Util::TypeConstraints qw/enum/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 use WWW::NOS::Open::TypeDef qw(NOSDateTime NOSURI);
 
@@ -18,34 +18,34 @@ Readonly::Array my @CATEGORIES     => qw(Nieuws Sport);
 Readonly::Array my @RESOURCE_TYPES => qw(artikel article video audio);
 
 has '_id' => (
-    is       => 'ro',
-    isa      => 'Str',
-    reader   => 'get_id',
-    init_arg => 'id',
+    'is'       => 'ro',
+    'isa'      => 'Str',
+    'reader'   => 'get_id',
+    'init_arg' => 'id',
 );
 
 has '_score' => (
-    is       => 'ro',
-    isa      => 'Num',
-    reader   => 'get_score',
-    init_arg => 'score',
+    'is'       => 'ro',
+    'isa'      => 'Num',
+    'reader'   => 'get_score',
+    'init_arg' => 'score',
 );
 
 has '_type' => (
-    is       => 'ro',
-    isa      => enum( [@RESOURCE_TYPES] ),
-    reader   => $GETTER . $UNDER . 'type',
-    init_arg => 'type',
+    'is'       => 'ro',
+    'isa'      => enum( [@RESOURCE_TYPES] ),
+    'reader'   => $GETTER . $UNDER . 'type',
+    'init_arg' => 'type',
 );
 
 my @strings = qw(title description subcategory);
 while ( my $string = shift @strings ) {
     has $UNDER
       . $string => (
-        is       => 'ro',
-        isa      => 'Str',
-        reader   => $GETTER . $UNDER . $string,
-        init_arg => $string,
+        'is'       => 'ro',
+        'isa'      => 'Str',
+        'reader'   => $GETTER . $UNDER . $string,
+        'init_arg' => $string,
       );
 }
 
@@ -53,11 +53,11 @@ my @dates = qw(published last_update);
 while ( my $date = shift @dates ) {
     has $UNDER
       . $date => (
-        is       => 'ro',
-        isa      => NOSDateTime,
-        coerce   => 1,
-        reader   => $GETTER . $UNDER . $date,
-        init_arg => $date,
+        'is'       => 'ro',
+        'isa'      => NOSDateTime,
+        'coerce'   => 1,
+        'reader'   => $GETTER . $UNDER . $date,
+        'init_arg' => $date,
       );
 }
 
@@ -65,26 +65,26 @@ my @uris = qw(thumbnail link);
 while ( my $uri = shift @uris ) {
     has $UNDER
       . $uri => (
-        is       => 'ro',
-        isa      => NOSURI,
-        coerce   => 1,
-        reader   => $GETTER . $UNDER . $uri,
-        init_arg => $uri,
+        'is'       => 'ro',
+        'isa'      => NOSURI,
+        'coerce'   => 1,
+        'reader'   => $GETTER . $UNDER . $uri,
+        'init_arg' => $uri,
       );
 }
 
 has '_category' => (
-    is       => 'ro',
-    isa      => enum( [@CATEGORIES] ),
-    reader   => 'get_category',
-    init_arg => 'category',
+    'is'       => 'ro',
+    'isa'      => enum( [@CATEGORIES] ),
+    'reader'   => 'get_category',
+    'init_arg' => 'category',
 );
 
 has '_keywords' => (
-    is       => 'ro',
-    isa      => 'ArrayRef[Str]',
-    reader   => 'get_keywords',
-    init_arg => 'keywords',
+    'is'       => 'ro',
+    'isa'      => 'ArrayRef[Str]',
+    'reader'   => 'get_keywords',
+    'init_arg' => 'keywords',
 );
 
 no Moose;
@@ -177,11 +177,19 @@ Returns the score of the document as ranked in the results as a number.
 
 =head1 DEPENDENCIES
 
-L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
-L<Moose|Moose>
-L<Readonly|Readonly>
-L<WWW::NOS::Open::TypeDef|WWW::NOS::Open::TypeDef>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
+
+=item * L<Moose|Moose>
+
+=item * L<Readonly|Readonly>
+
+=item * L<WWW::NOS::Open::TypeDef|WWW::NOS::Open::TypeDef>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

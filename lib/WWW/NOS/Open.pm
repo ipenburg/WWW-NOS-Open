@@ -20,7 +20,7 @@ use URI::Escape qw(uri_escape);
 use URI;
 use XML::Simple;
 
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 use WWW::NOS::Open::Article;
 use WWW::NOS::Open::AudioFragment;
@@ -34,14 +34,14 @@ use WWW::NOS::Open::Version;
 use WWW::NOS::Open::Video;
 
 use Readonly;
-Readonly::Scalar my $SERVER => $ENV{NOSOPEN_SERVER} || q{http://open.nos.nl};
-Readonly::Scalar my $TIMEOUT       => 15;
-Readonly::Scalar my $AGENT         => q{WWW::NOS::Open/} . $WWW::NOS::Open::VERSION;
-Readonly::Scalar my $DATE_FORMAT   => q{%04u-%02u-%02u};
-Readonly::Scalar my $DEFAULT_START => -1;                            # Yesterday
-Readonly::Scalar my $DEFAULT_END   => 1;                             # Tomorrow
-Readonly::Scalar my $MAX_RANGE     => 14;                            # Two weeks
-Readonly::Scalar my $GET           => q{GET};
+Readonly::Scalar my $SERVER => $ENV{'NOSOPEN_SERVER'} || q{http://open.nos.nl};
+Readonly::Scalar my $TIMEOUT => 15;
+Readonly::Scalar my $AGENT   => q{WWW::NOS::Open/} . $WWW::NOS::Open::VERSION;
+Readonly::Scalar my $DATE_FORMAT      => q{%04u-%02u-%02u};
+Readonly::Scalar my $DEFAULT_START    => -1;                  # Yesterday
+Readonly::Scalar my $DEFAULT_END      => 1;                   # Tomorrow
+Readonly::Scalar my $MAX_RANGE        => 14;                  # Two weeks
+Readonly::Scalar my $GET              => q{GET};
 Readonly::Scalar my $DEFAULT_API_KEY  => q{TEST};
 Readonly::Scalar my $DEFAULT_OUTPUT   => q{xml};
 Readonly::Scalar my $DEFAULT_CATEGORY => q{nieuws};
@@ -58,13 +58,13 @@ Readonly::Scalar my $XML_DETECT    => qr{^<}smx;
 Readonly::Scalar my $STRIP_PRIVATE => qr{^_}smx;
 
 Readonly::Hash my %ERR => (
-    INTERNAL_SERVER => q{Internal server error or no response recieved},
-    UNPARSABLE      => q{Could not parse data},
-    EXCEEDED_RANGE  => qq{Date range exceeds maximum of $MAX_RANGE days},
+    'INTERNAL_SERVER' => q{Internal server error or no response recieved},
+    'UNPARSABLE'      => q{Could not parse data},
+    'EXCEEDED_RANGE'  => qq{Date range exceeds maximum of $MAX_RANGE days},
 );
 Readonly::Hash my %LOG => (
-    REQUESTING    => q{Requesting %s},
-    RESPONSE_CODE => q{Response code %d},
+    'REQUESTING'    => q{Requesting %s},
+    'RESPONSE_CODE' => q{Response code %d},
 );
 
 Log::Log4perl::easy_init($ERROR);
@@ -72,19 +72,19 @@ Log::Log4perl::easy_init($ERROR);
 my $log = Log::Log4perl->get_logger(__PACKAGE__);
 
 has '_ua' => (
-    is      => 'ro',
-    isa     => 'LWP::UserAgent',
-    default => sub {
+    'is'      => 'ro',
+    'isa'     => 'LWP::UserAgent',
+    'default' => sub {
         LWP::UserAgent->new(
-            timeout => $TIMEOUT,
-            agent   => $AGENT,
+            'timeout' => $TIMEOUT,
+            'agent'   => $AGENT,
         );
     },
 );
 
 has '_version' => (
-    is  => 'ro',
-    isa => 'WWW::NOS::Open::Version',
+    'is'  => 'ro',
+    'isa' => 'WWW::NOS::Open::Version',
 );
 
 sub get_version {
@@ -101,31 +101,31 @@ sub _parse_version {
     my ( $self, $body ) = @_;
     my ( $version, $build );
     if ( $body =~ /$XML_DETECT/gsmx ) {
-        my $xml = XML::Simple->new( ForceArray => 1 )->XMLin($body);
-        $version = $xml->{item}[0]->{version}[0];
-        $build   = $xml->{item}[0]->{build}[0];
+        my $xml = XML::Simple->new( 'ForceArray' => 1 )->XMLin($body);
+        $version = $xml->{'item'}[0]->{'version'}[0];
+        $build   = $xml->{'item'}[0]->{'build'}[0];
     }
     else {
-        $log->fatal( $ERR{UNPARSABLE} );
+        $log->fatal( $ERR{'UNPARSABLE'} );
     }
     return WWW::NOS::Open::Version->new( $version, $build );
 }
 
-has '_default_output' => (
-    is       => 'ro',
-    isa      => 'Str',
-    default  => $DEFAULT_OUTPUT,
-    reader   => '_get_default_output',
-    init_arg => 'default_output',
+has ' _default_output ' => (
+    ' is '       => ' ro ',
+    ' isa '      => ' Str ',
+    ' default '  => $DEFAULT_OUTPUT,
+    ' reader '   => ' _get_default_output ',
+    ' init_arg ' => ' default_output ',
 );
 
-has '_api_key' => (
-    is       => 'rw',
-    isa      => 'Str',
-    default  => $DEFAULT_API_KEY,
-    reader   => 'get_api_key',
-    writer   => 'set_api_key',
-    init_arg => 'api_key',
+has ' _api_key ' => (
+    ' is '       => ' rw ',
+    ' isa '      => ' Str ',
+    ' default '  => $DEFAULT_API_KEY,
+    ' reader '   => ' get_api_key ',
+    ' writer '   => ' set_api_key ',
+    ' init_arg ' => ' api_key ',
 );
 
 sub _get_latest_resources {
@@ -160,22 +160,22 @@ sub __get_props {
 sub _parse_resource {
     my ( $self, $type, $hr_resource ) = @_;
     my %mapping = (
-        article   => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
-        video     => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
-        audio     => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type . $FRAGMENT,
-        document  => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
-        broadcast => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
+        ' article '  => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
+        ' video '    => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
+        ' audio '    => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type . $FRAGMENT,
+        ' document ' => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
+        ' broadcast ' => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
     );
 
     my @props = __get_props( ( $mapping{$type} )->meta );
     my %param;
     while ( my $prop = shift @props ) {
         $param{$prop} =
-          ( ref $hr_resource->{$prop}[0] eq q{HASH} )
+          ( ref $hr_resource->{$prop}[0] eq q{' HASH '} )
           ? %{ $hr_resource->{$prop}[0] }
           : $hr_resource->{$prop}[0];
     }
-    $param{keywords} = $hr_resource->{keywords}->[0]->{keyword} || [];
+    $param{' keywords '} = $hr_resource->{' keywords '}->[0]->{'keyword'} || [];
     if ( my $resource = ( $mapping{$type} )->new(%param) ) {
         return $resource;
     }
@@ -187,7 +187,7 @@ sub _parse_resources {
     my @resources;
 
     if ( $body =~ /$XML_DETECT/gsmx ) {
-        my $xml = XML::Simple->new( ForceArray => 1 )->XMLin($body);
+        my $xml = XML::Simple->new( 'ForceArray' => 1 )->XMLin($body);
         my @xml_resources = @{ $xml->{$type} };
         while ( my $resource = shift @xml_resources ) {
             push @resources, $self->_parse_resource( $type, $resource );
@@ -195,7 +195,7 @@ sub _parse_resources {
         return @resources;
     }
     else {
-        $log->fatal( $ERR{UNPARSABLE} );
+        $log->fatal( $ERR{' UNPARSABLE '} );
     }
     return ();
 }
@@ -214,20 +214,20 @@ sub _parse_result {
     my ( $self, $body ) = @_;
     my @documents;
     if ( $body =~ /$XML_DETECT/gsmx ) {
-        my $xml = XML::Simple->new( ForceArray => 1 )->XMLin($body);
-        my @xml_documents = @{ $xml->{documents}->[0]->{document} };
+        my $xml = XML::Simple->new( 'ForceArray' => 1 )->XMLin($body);
+        my @xml_documents = @{ $xml->{' documents '}->[0]->{' document '} };
         while ( my $hr_document = shift @xml_documents ) {
             push @documents,
               $self->_parse_resource( q{document}, $hr_document );
         }
         my $result = WWW::NOS::Open::Result->new(
-            documents => [@documents],
-            related   => $xml->{related}->[0]->{related},
+            'documents' => [@documents],
+            'related'   => $xml->{' related '}->[0]->{' related '},
         );
         return $result;
     }
     else {
-        $log->fatal( $ERR{UNPARSABLE} );
+        $log->fatal( $ERR{' UNPARSABLE '} );
     }
     return ();
 }
@@ -250,12 +250,12 @@ sub __get_date {
     return (
         (
             sprintf $DATE_FORMAT,
-            Add_Delta_Days( 1, 1, 1, $today + $start_day - 1 )
+            Add_Delta_Days( 1, 1, 1, $today + $start_day - 1 ),
         ),
         (
             sprintf $DATE_FORMAT,
-            Add_Delta_Days( 1, 1, 1, $today + $end_day - 1 )
-        )
+            Add_Delta_Days( 1, 1, 1, $today + $end_day - 1 ),
+        ),
     );
 }
 
@@ -274,10 +274,10 @@ sub _parse_dayguide {
           )
           : $hr_dayguide->{$prop};
     }
-    $param{broadcasts} = [];
-    my @broadcasts = $hr_dayguide->{item};
+    $param{' broadcasts '} = [];
+    my @broadcasts = $hr_dayguide->{' item '};
     while ( my $ar_broadcast = shift @broadcasts ) {
-        push @{ $param{broadcasts} },
+        push @{ $param{' broadcasts '} },
           $self->_parse_resource( q{broadcast}, $ar_broadcast->[0] );
     }
     if ( my $dayguide = WWW::NOS::Open::DayGuide->new(%param) ) {
@@ -290,15 +290,15 @@ sub _parse_guide {
     my ( $self, $body ) = @_;
     my @dayguides;
     if ( $body =~ /$XML_DETECT/gsmx ) {
-        my $xml = XML::Simple->new( ForceArray => 1 )->XMLin($body);
-        my @xml_dayguides = @{ $xml->{dayguide} };
+        my $xml = XML::Simple->new( 'ForceArray' => 1 )->XMLin($body);
+        my @xml_dayguides = @{ $xml->{' dayguide '} };
         while ( my $hr_dayguide = shift @xml_dayguides ) {
             push @dayguides, $self->_parse_dayguide($hr_dayguide);
         }
         return @dayguides;
     }
     else {
-        $log->fatal( $ERR{UNPARSABLE} );
+        $log->fatal( $ERR{' UNPARSABLE '} );
     }
     return ();
 }
@@ -318,7 +318,7 @@ sub _get_broadcasts {
         ## no critic qw(RequireExplicitInclusion)
         NOSOpenExceededRangeException->throw(
             ## use critic
-            error => $ERR{EXCEEDED_RANGE}
+            ' error ' => $ERR{' EXCEEDED_RANGE '},
         );
     }
     my $url = sprintf $GUIDE_PATH,
@@ -349,14 +349,14 @@ sub _do_request {
         $GET => $url,
         HTTP::Headers->new(),
     );
-    $log->debug( sprintf $LOG{REQUESTING}, $url );
+    $log->debug( sprintf $LOG{' REQUESTING '}, $url );
     my $response = $self->_ua->request($request);
-    $log->debug( sprintf $LOG{RESPONSE_CODE}, $response->code );
+    $log->debug( sprintf $LOG{' RESPONSE_CODE '}, $response->code );
     if ( $response->code == HTTP_INTERNAL_SERVER_ERROR ) {
         ## no critic qw(RequireExplicitInclusion)
         NOSOpenInternalServerErrorException->throw(
             ## use critic
-            error => $ERR{INTERNAL_SERVER}
+            ' error ' => $ERR{' INTERNAL_SERVER '},
         );
     }
     elsif ( $response->code > HTTP_OK ) {
@@ -365,39 +365,39 @@ sub _do_request {
             ## no critic qw(RequireExplicitInclusion)
             NOSOpenBadRequestException->throw(
                 ## use critic
-                error => $json->decode( $response->decoded_content )
+                ' error ' => $json->decode( $response->decoded_content ),
             );
         }
         elsif ( $response->code == HTTP_UNAUTHORIZED ) {
             ## no critic qw(RequireExplicitInclusion)
             NOSOpenUnauthorizedException->throw(
                 ## use critic
-                error => $json->decode( $response->decoded_content )
+                ' error ' => $json->decode( $response->decoded_content ),
             );
         }
         elsif ( $response->code == HTTP_FORBIDDEN ) {
             ## no critic qw(RequireExplicitInclusion)
             NOSOpenForbiddenException->throw(
                 ## use critic
-                error => $json->decode( $response->decoded_content )
+                ' error ' => $json->decode( $response->decoded_content ),
             );
         }
     }
     return $response;
 }
 
-around BUILDARGS => sub {
+around 'BUILDARGS' => sub {
     my $orig  = shift;
     my $class = shift;
     my ( $api_key, $default_output ) = @_;
 
     return $class->$orig(
-        api_key        => $api_key        || $DEFAULT_API_KEY,
-        default_output => $default_output || $DEFAULT_OUTPUT,
+        ' api_key '        => $api_key        || $DEFAULT_API_KEY,
+        ' default_output ' => $default_output || $DEFAULT_OUTPUT,
     );
 };
 
-with 'WWW::NOS::Open::Interface';
+with ' WWW::NOS::Open::Interface ';
 
 no Moose;
 
@@ -427,7 +427,7 @@ This document describes WWW::NOS::Open version 0.100.
 
     use WWW::NOS::Open;
     my $nos = WWW::NOS::Open->new($API_KEY);
-    @latest_articles = $nos->get_latest_articles('nieuws');
+    @latest_articles = $nos->get_latest_articles(' nieuws ');
 
 =head1 DESCRIPTION
 
@@ -548,31 +548,59 @@ C<WWW::NOS::Open/0.01>.
 
 =head1 DEPENDENCIES
 
-L<Date::Calc|Date::Calc>
-L<Date::Format|Date::Format>
-L<HTTP::Headers|HTTP::Headers>
-L<HTTP::Request|HTTP::Request>
-L<HTTP::Status|HTTP::Status>
-L<JSON|JSON>
-L<LWP::UserAgent|LWP::UserAgent>
-L<Log::Log4perl|Log::Log4perl>
-L<Moose|Moose>
-L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
-L<Readonly|Readonly>
-L<URI|URI>
-L<URI::Escape|URI::Escape>
-L<WWW::NOS::Open::Article|WWW::NOS::Open::Article>
-L<WWW::NOS::Open::AudioFragment|WWW::NOS::Open::AudioFragment>
-L<WWW::NOS::Open::Broadcast|WWW::NOS::Open::Broadcast>
-L<WWW::NOS::Open::DayGuide|WWW::NOS::Open::DayGuide>
-L<WWW::NOS::Open::Document|WWW::NOS::Open::Document>
-L<WWW::NOS::Open::Exceptions|WWW::NOS::Open::Exceptions>
-L<WWW::NOS::Open::Result|WWW::NOS::Open::Result>
-L<WWW::NOS::Open::TypeDef|WWW::NOS::Open::TypeDef>
-L<WWW::NOS::Open::Version|WWW::NOS::Open::Version>
-L<WWW::NOS::Open::Video|WWW::NOS::Open::Video>
-L<XML::Simple|XML::Simple>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * L<Date::Calc|Date::Calc>
+
+=item * L<Date::Format|Date::Format>
+
+=item * L<HTTP::Headers|HTTP::Headers>
+
+=item * L<HTTP::Request|HTTP::Request>
+
+=item * L<HTTP::Status|HTTP::Status>
+
+=item * L<JSON|JSON>
+
+=item * L<LWP::UserAgent|LWP::UserAgent>
+
+=item * L<Log::Log4perl|Log::Log4perl>
+
+=item * L<Moose|Moose>
+
+=item * L<Moose::Util::TypeConstraints|Moose::Util::TypeConstraints>
+
+=item * L<Readonly|Readonly>
+
+=item * L<URI|URI>
+
+=item * L<URI::Escape|URI::Escape>
+
+=item * L<WWW::NOS::Open::Article|WWW::NOS::Open::Article>
+
+=item * L<WWW::NOS::Open::AudioFragment|WWW::NOS::Open::AudioFragment>
+
+=item * L<WWW::NOS::Open::Broadcast|WWW::NOS::Open::Broadcast>
+
+=item * L<WWW::NOS::Open::DayGuide|WWW::NOS::Open::DayGuide>
+
+=item * L<WWW::NOS::Open::Document|WWW::NOS::Open::Document>
+
+=item * L<WWW::NOS::Open::Exceptions|WWW::NOS::Open::Exceptions>
+
+=item * L<WWW::NOS::Open::Result|WWW::NOS::Open::Result>
+
+=item * L<WWW::NOS::Open::TypeDef|WWW::NOS::Open::TypeDef>
+
+=item * L<WWW::NOS::Open::Version|WWW::NOS::Open::Version>
+
+=item * L<WWW::NOS::Open::Video|WWW::NOS::Open::Video>
+
+=item * L<XML::Simple|XML::Simple>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

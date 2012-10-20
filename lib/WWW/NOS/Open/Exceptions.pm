@@ -1,4 +1,4 @@
-package WWW::NOS::Open::Exceptions 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Exceptions 0.100; # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -33,11 +33,11 @@ This document describes WWW::NOS::Open::Exceptions version 0.100.
 =head1 SYNOPSIS
 
     use WWW::NOS::Open::Exceptions;
-    NOSOpenInternalServerErrorException->throw( error => $ERR );
-    NOSOpenBadRequestException->throw( error => $ERR );
-    NOSOpenUnauthorizedException->throw( error => $ERR );
-    NOSOpenForbiddenException->throw( error => $ERR );
-    NOSOpenExceededRangeException->throw( error => $ERR );
+    NOSOpenInternalServerErrorException->throw( 'error' => $ERR );
+    NOSOpenBadRequestException->throw( 'error' => $ERR );
+    NOSOpenUnauthorizedException->throw( 'error' => $ERR );
+    NOSOpenForbiddenException->throw( 'error' => $ERR );
+    NOSOpenExceededRangeException->throw( 'error' => $ERR );
 
 =head1 DESCRIPTION
 
@@ -54,7 +54,11 @@ All inherited from L<Exception::Class::Base|Exception::Class::Base/METHODS>.
 
 =head1 DEPENDENCIES
 
-L<Exception::Class|Exception::Class>
+=over 4
+
+=item * L<Exception::Class|Exception::Class>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

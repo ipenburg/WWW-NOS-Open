@@ -6,7 +6,7 @@ use utf8;
 use 5.014000;
 
 use Moose qw/extends/;
-use namespace::autoclean -also => qr/^__/sxm;
+use namespace::autoclean '-also' => qr/^__/sxm;
 
 extends 'WWW::NOS::Open::MediaResource';
 
@@ -106,9 +106,17 @@ strings.
 
 =head1 DEPENDENCIES
 
-L<Moose|Moose>
-L<WWW::NOS::Open::MediaResource|WWW::NOS::Open::MediaResource>
-L<namespace::autoclean|namespace::autoclean>
+=over 4
+
+=item * perl 5.14 
+
+=item * L<Moose|Moose>
+
+=item * L<WWW::NOS::Open::MediaResource|WWW::NOS::Open::MediaResource>
+
+=item * L<namespace::autoclean|namespace::autoclean>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

@@ -1,4 +1,4 @@
-package WWW::NOS::Open::Interface 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Interface 0.100;  # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -60,8 +60,13 @@ A role defining the interface of the L<Open NOS|http://open.nos.nl/> REST API.
 
 =head1 DEPENDENCIES
 
-L<Moose|Moose>
-L<Moose::Role|Moose::Role>
+=over 4
+
+=item * L<Moose|Moose>
+
+=item * L<Moose::Role|Moose::Role>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

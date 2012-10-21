@@ -722,11 +722,19 @@ None.
 
 =head1 DEPENDENCIES
 
-L<CGI|CGI>
-L<Getopt::Long|Getopt::Long>
-L<HTTP::Server::Brick|HTTP::Server::Brick>
-L<Pod::Usage|Pod::Usage>
-L<Readonly|Readonly>
+=over 4
+
+=item * L<CGI|CGI>
+
+=item * L<Getopt::Long|Getopt::Long>
+
+=item * L<HTTP::Server::Brick|HTTP::Server::Brick>
+
+=item * L<Pod::Usage|Pod::Usage>
+
+=item * L<Readonly|Readonly>
+
+=back
 
 =head1 INCOMPATIBILITIES
 

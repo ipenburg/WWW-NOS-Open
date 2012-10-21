@@ -111,21 +111,21 @@ sub _parse_version {
     return WWW::NOS::Open::Version->new( $version, $build );
 }
 
-has ' _default_output ' => (
-    ' is '       => ' ro ',
-    ' isa '      => ' Str ',
-    ' default '  => $DEFAULT_OUTPUT,
-    ' reader '   => ' _get_default_output ',
-    ' init_arg ' => ' default_output ',
+has '_default_output' => (
+    'is'       => 'ro',
+    'isa'      => 'Str',
+    'default'  => $DEFAULT_OUTPUT,
+    'reader'   => '_get_default_output',
+    'init_arg' => 'default_output',
 );
 
-has ' _api_key ' => (
-    ' is '       => ' rw ',
-    ' isa '      => ' Str ',
-    ' default '  => $DEFAULT_API_KEY,
-    ' reader '   => ' get_api_key ',
-    ' writer '   => ' set_api_key ',
-    ' init_arg ' => ' api_key ',
+has '_api_key' => (
+    'is'       => 'rw',
+    'isa'      => 'Str',
+    'default'  => $DEFAULT_API_KEY,
+    'reader'   => 'get_api_key',
+    'writer'   => 'set_api_key',
+    'init_arg' => 'api_key',
 );
 
 sub _get_latest_resources {
@@ -160,22 +160,22 @@ sub __get_props {
 sub _parse_resource {
     my ( $self, $type, $hr_resource ) = @_;
     my %mapping = (
-        ' article '  => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
-        ' video '    => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
-        ' audio '    => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type . $FRAGMENT,
-        ' document ' => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
-        ' broadcast ' => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
+        'article'   => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
+        'video'     => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
+        'audio'     => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type . $FRAGMENT,
+        'document'  => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
+        'broadcast' => __PACKAGE__ . $DOUBLE_COLON . ucfirst $type,
     );
 
     my @props = __get_props( ( $mapping{$type} )->meta );
     my %param;
     while ( my $prop = shift @props ) {
         $param{$prop} =
-          ( ref $hr_resource->{$prop}[0] eq q{' HASH '} )
+          ( ref $hr_resource->{$prop}[0] eq q{HASH} )
           ? %{ $hr_resource->{$prop}[0] }
           : $hr_resource->{$prop}[0];
     }
-    $param{' keywords '} = $hr_resource->{' keywords '}->[0]->{'keyword'} || [];
+    $param{'keywords'} = $hr_resource->{'keywords'}->[0]->{'keyword'} || [];
     if ( my $resource = ( $mapping{$type} )->new(%param) ) {
         return $resource;
     }
@@ -195,7 +195,7 @@ sub _parse_resources {
         return @resources;
     }
     else {
-        $log->fatal( $ERR{' UNPARSABLE '} );
+        $log->fatal( $ERR{'UNPARSABLE'} );
     }
     return ();
 }
@@ -215,19 +215,19 @@ sub _parse_result {
     my @documents;
     if ( $body =~ /$XML_DETECT/gsmx ) {
         my $xml = XML::Simple->new( 'ForceArray' => 1 )->XMLin($body);
-        my @xml_documents = @{ $xml->{' documents '}->[0]->{' document '} };
+        my @xml_documents = @{ $xml->{'documents'}->[0]->{'document'} };
         while ( my $hr_document = shift @xml_documents ) {
             push @documents,
               $self->_parse_resource( q{document}, $hr_document );
         }
         my $result = WWW::NOS::Open::Result->new(
             'documents' => [@documents],
-            'related'   => $xml->{' related '}->[0]->{' related '},
+            'related'   => $xml->{'related'}->[0]->{'related'},
         );
         return $result;
     }
     else {
-        $log->fatal( $ERR{' UNPARSABLE '} );
+        $log->fatal( $ERR{'UNPARSABLE'} );
     }
     return ();
 }
@@ -274,10 +274,10 @@ sub _parse_dayguide {
           )
           : $hr_dayguide->{$prop};
     }
-    $param{' broadcasts '} = [];
-    my @broadcasts = $hr_dayguide->{' item '};
+    $param{'broadcasts'} = [];
+    my @broadcasts = $hr_dayguide->{'item'};
     while ( my $ar_broadcast = shift @broadcasts ) {
-        push @{ $param{' broadcasts '} },
+        push @{ $param{'broadcasts'} },
           $self->_parse_resource( q{broadcast}, $ar_broadcast->[0] );
     }
     if ( my $dayguide = WWW::NOS::Open::DayGuide->new(%param) ) {
@@ -291,14 +291,14 @@ sub _parse_guide {
     my @dayguides;
     if ( $body =~ /$XML_DETECT/gsmx ) {
         my $xml = XML::Simple->new( 'ForceArray' => 1 )->XMLin($body);
-        my @xml_dayguides = @{ $xml->{' dayguide '} };
+        my @xml_dayguides = @{ $xml->{'dayguide'} };
         while ( my $hr_dayguide = shift @xml_dayguides ) {
             push @dayguides, $self->_parse_dayguide($hr_dayguide);
         }
         return @dayguides;
     }
     else {
-        $log->fatal( $ERR{' UNPARSABLE '} );
+        $log->fatal( $ERR{'UNPARSABLE'} );
     }
     return ();
 }
@@ -318,7 +318,7 @@ sub _get_broadcasts {
         ## no critic qw(RequireExplicitInclusion)
         NOSOpenExceededRangeException->throw(
             ## use critic
-            ' error ' => $ERR{' EXCEEDED_RANGE '},
+            'error' => $ERR{'EXCEEDED_RANGE'},
         );
     }
     my $url = sprintf $GUIDE_PATH,
@@ -349,14 +349,14 @@ sub _do_request {
         $GET => $url,
         HTTP::Headers->new(),
     );
-    $log->debug( sprintf $LOG{' REQUESTING '}, $url );
+    $log->debug( sprintf $LOG{'REQUESTING'}, $url );
     my $response = $self->_ua->request($request);
-    $log->debug( sprintf $LOG{' RESPONSE_CODE '}, $response->code );
+    $log->debug( sprintf $LOG{'RESPONSE_CODE'}, $response->code );
     if ( $response->code == HTTP_INTERNAL_SERVER_ERROR ) {
         ## no critic qw(RequireExplicitInclusion)
         NOSOpenInternalServerErrorException->throw(
             ## use critic
-            ' error ' => $ERR{' INTERNAL_SERVER '},
+            'error' => $ERR{'INTERNAL_SERVER'},
         );
     }
     elsif ( $response->code > HTTP_OK ) {
@@ -365,21 +365,21 @@ sub _do_request {
             ## no critic qw(RequireExplicitInclusion)
             NOSOpenBadRequestException->throw(
                 ## use critic
-                ' error ' => $json->decode( $response->decoded_content ),
+                'error' => $json->decode( $response->decoded_content ),
             );
         }
         elsif ( $response->code == HTTP_UNAUTHORIZED ) {
             ## no critic qw(RequireExplicitInclusion)
             NOSOpenUnauthorizedException->throw(
                 ## use critic
-                ' error ' => $json->decode( $response->decoded_content ),
+                'error' => $json->decode( $response->decoded_content ),
             );
         }
         elsif ( $response->code == HTTP_FORBIDDEN ) {
             ## no critic qw(RequireExplicitInclusion)
             NOSOpenForbiddenException->throw(
                 ## use critic
-                ' error ' => $json->decode( $response->decoded_content ),
+                'error' => $json->decode( $response->decoded_content ),
             );
         }
     }
@@ -392,12 +392,12 @@ around 'BUILDARGS' => sub {
     my ( $api_key, $default_output ) = @_;
 
     return $class->$orig(
-        ' api_key '        => $api_key        || $DEFAULT_API_KEY,
-        ' default_output ' => $default_output || $DEFAULT_OUTPUT,
+        'api_key'        => $api_key        || $DEFAULT_API_KEY,
+        'default_output' => $default_output || $DEFAULT_OUTPUT,
     );
 };
 
-with ' WWW::NOS::Open::Interface ';
+with 'WWW::NOS::Open::Interface';
 
 no Moose;
 
@@ -427,7 +427,7 @@ This document describes WWW::NOS::Open version 0.100.
 
     use WWW::NOS::Open;
     my $nos = WWW::NOS::Open->new($API_KEY);
-    @latest_articles = $nos->get_latest_articles(' nieuws ');
+    @latest_articles = $nos->get_latest_articles('nieuws');
 
 =head1 DESCRIPTION
 

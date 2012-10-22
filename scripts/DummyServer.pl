@@ -1,4 +1,5 @@
 #!/usr/bin/env perl    # -*- cperl; cperl-indent-level: 4 -*-
+## no critic qw(RestrictLongStrings ProhibitImplicitNewlines RequireASCII)
 use strict;
 use warnings;
 
@@ -25,12 +26,12 @@ Readonly::Scalar my $API_KEY         => q{TEST};
 Readonly::Scalar my $API_VERSION     => q{v1};
 Readonly::Scalar my $CHARSET         => q{; charset=utf-8};
 Readonly::Scalar my $ROOT            => qq{/$API_VERSION/};
-Readonly::Scalar my $STRIP_QUERY     => qr{^/\?}sxm;
+Readonly::Scalar my $STRIP_QUERY     => qr{^/[?]}sxm;
 
 Readonly::Array my @GETOPT_CONFIG =>
   qw(no_ignore_case bundling auto_version auto_help);
 Readonly::Array my @GETOPTIONS => ( q{port|p=s}, q{help|h}, q{verbose|v+}, );
-Readonly::Hash my %OPTS_DEFAULT => ( port => $CONNECTOR_PORT, );
+Readonly::Hash my %OPTS_DEFAULT => ( 'port' => $CONNECTOR_PORT, );
 Readonly::Hash my %OUTPUT => (
     'json' => q{application/json},
     'xml'  => q{text/xml},
@@ -56,7 +57,7 @@ Readonly::Hash my %RESPONSE => (
         'php' =>
 q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1";}}}},
     },
-    latest_article => {
+    'latest_article' => {
         'json' => q{{
 "latest_article": [
     [
@@ -122,7 +123,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
     </article>
 </list>},
     },
-    latest_video => {
+    'latest_video' => {
         'json' => q{{
     "latest_video": [
         [
@@ -211,7 +212,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
     </video>
 </list>},
     },
-    latest_audio => {
+    'latest_audio' => {
         'json' => q{{
     "latest_audio": [
         [
@@ -378,7 +379,7 @@ q{a:1:{s:7:"version";a:1:{i:0;a:2:{s:7:"version";s:2:"v1";s:5:"build";s:5:"0.0.1
     </related>
 </list>},
     },
-    guide_radio => {
+    'guide_radio' => {
         'json' => q{{
     guide: [
         [
@@ -615,15 +616,15 @@ Getopt::Long::Configure(@GETOPT_CONFIG);
 my %opts = %OPTS_DEFAULT;
 Getopt::Long::GetOptions( \%opts, @GETOPTIONS ) or Pod::Usage::pod2usage(2);
 
-my $server = HTTP::Server::Brick->new( port => $opts{port} );
+my $server = HTTP::Server::Brick->new( 'port' => $opts{'port'} );
 
 my $requests = 0;
 
 $server->mount(
     $ROOT => {
-        handler  => \&main,
-        wildcard => 1,
-    }
+        'handler'  => \&main,
+        'wildcard' => 1,
+    },
 );
 
 sub main {
@@ -632,53 +633,95 @@ sub main {
     $uri =~ s{$STRIP_QUERY}{}smx;
     my $q = CGI->new($uri);
     my %param = split $SLASH, $uri;
-    if ( !defined $OUTPUT{ lc $param{output} } ) {
-        $res->add_content_utf8( $ERROR{bad_request_invalid} );
-        $param{output} = $FALLBACK_OUTPUT;
-        $res->header( 'Content-Type', $OUTPUT{ lc $param{output} } . $CHARSET );
-        $res->header( 'Status',
-            HTTP_BAD_REQUEST . $SPACE . status_message(HTTP_BAD_REQUEST) );
-        $res->code(HTTP_BAD_REQUEST);
+    if ( !defined $OUTPUT{ lc $param{'output'} } ) {
+        $res->add_content_utf8( $ERROR{'bad_request_invalid'} );
+        $param{'output'} = $FALLBACK_OUTPUT;
+        $res->header( 'Content-Type',
+            $OUTPUT{ lc $param{'output'} } . $CHARSET );
+        $res->header(
+            'Status',
+            ## no critic qw(ProhibitCallsToUnexportedSubs)
+            HTTP::Status::HTTP_BAD_REQUEST
+              ## use critic
+              . $SPACE
+              ## no critic qw(ProhibitCallsToUnexportedSubs)
+              . status_message(HTTP::Status::HTTP_BAD_REQUEST),
+        );
+        ## use critic
+        ## no critic qw(ProhibitCallsToUnexportedSubs)
+        $res->code(HTTP::Status::HTTP_BAD_REQUEST);
+        ## use critic
     }
-    $res->header( 'Content-Type', $OUTPUT{ lc $param{output} } . $CHARSET );
-    if ( !defined $param{key} ) {
-        $res->add_content_utf8( $ERROR{bad_request_missing} );
-        $res->header( 'Status',
-            HTTP_BAD_REQUEST . $SPACE . status_message(HTTP_BAD_REQUEST) );
-        $res->code(HTTP_BAD_REQUEST);
+    $res->header( 'Content-Type', $OUTPUT{ lc $param{'output'} } . $CHARSET );
+    if ( !defined $param{'key'} ) {
+        $res->add_content_utf8( $ERROR{'bad_request_missing'} );
+        $res->header(
+            'Status',
+            ## no critic qw(ProhibitCallsToUnexportedSubs)
+            HTTP::Status::HTTP_BAD_REQUEST
+              ## use critic
+              . $SPACE
+              ## no critic qw(ProhibitCallsToUnexportedSubs)
+              . status_message(HTTP::Status::HTTP_BAD_REQUEST),
+        );
+        ## use critic
+        ## no critic qw(ProhibitCallsToUnexportedSubs)
+        $res->code(HTTP::Status::HTTP_BAD_REQUEST);
+        ## use critic
     }
-    if ( $param{key} ne $API_KEY ) {
-        $res->header( 'Status',
-            HTTP_UNAUTHORIZED . $SPACE . status_message(HTTP_UNAUTHORIZED) );
+    if ( $param{'key'} ne $API_KEY ) {
+        $res->header(
+            'Status',
+            ## no critic qw(ProhibitCallsToUnexportedSubs)
+            HTTP::Status::HTTP_UNAUTHORIZED
+              ## use critic
+              . $SPACE
+              ## no critic qw(ProhibitCallsToUnexportedSubs)
+              . status_message(HTTP::Status::HTTP_UNAUTHORIZED),
+        );
+        ## use critic
 
   # TODO: This also sets the content, which we don't want:
   # (this is a TODO in HTTP::Server::Brick, so fixing it there is the way to go)
-        $res->code(HTTP_UNAUTHORIZED);
-        $res->add_content_utf8( $ERROR{unauthorized} );
+        ## no critic qw(ProhibitCallsToUnexportedSubs)
+        $res->code(HTTP::Status::HTTP_UNAUTHORIZED);
+        ## use critic
+        $res->add_content_utf8( $ERROR{'unauthorized'} );
     }
     $requests++;
 
     # dummy rate limit tester:
     if ( $requests > $MAX_REQUESTS ) {
-        $res->add_content_utf8( $ERROR{forbidden} );
-        $res->header( 'Status',
-            HTTP_FORBIDDEN . $SPACE . status_message(HTTP_FORBIDDEN) );
+        $res->add_content_utf8( $ERROR{'forbidden'} );
+        $res->header(
+            'Status',
+            ## no critic qw(ProhibitCallsToUnexportedSubs)
+            HTTP::Status::HTTP_FORBIDDEN
+              ## use critic
+              . $SPACE
+              ## no critic qw(ProhibitCallsToUnexportedSubs)
+              . status_message(HTTP::Status::HTTP_FORBIDDEN),
+        );
+        ## use critic
         $requests = 0;
-        $res->code(HTTP_FORBIDDEN);
+        ## no critic qw(ProhibitCallsToUnexportedSubs)
+        $res->code(HTTP::Status::HTTP_FORBIDDEN);
+        ## use critic
     }
-    if ( defined $param{index} && $param{index} eq q{version} ) {
-        $res->add_content_utf8( $RESPONSE{version}->{ lc $param{output} } );
+    if ( defined $param{'index'} && $param{'index'} eq q{version} ) {
+        $res->add_content_utf8( $RESPONSE{'version'}->{ lc $param{'output'} } );
     }
-    if ( defined $param{latest} ) {
+    if ( defined $param{'latest'} ) {
         $res->add_content_utf8(
-            $RESPONSE{ q{latest_} . $param{latest} }->{ lc $param{output} } );
+            $RESPONSE{ q{latest_} . $param{'latest'} }->{ lc $param{'output'} },
+        );
     }
-    if ( defined $param{search} && $param{search} eq q{query} ) {
-        $res->add_content_utf8( $RESPONSE{search}->{ lc $param{output} } );
+    if ( defined $param{'search'} && $param{'search'} eq q{query} ) {
+        $res->add_content_utf8( $RESPONSE{'search'}->{ lc $param{'output'} } );
     }
-    if ( defined $param{guide} ) {
+    if ( defined $param{'guide'} ) {
         $res->add_content_utf8(
-            $RESPONSE{ q{guide_} . $param{guide} }->{ lc $param{output} } );
+            $RESPONSE{ q{guide_} . $param{'guide'} }->{ lc $param{'output'} } );
     }
 
     return 1;

@@ -19,8 +19,13 @@ if ($EVAL_ERROR) {
 Test::Spelling::add_stopwords(<DATA>);
 Test::Spelling::all_pod_files_spelling_ok();
 __DATA__
+API
+CGI
 Ipenburg
+NOS
 RT
-rt
+Readonly
+apikey
 cpan
 org
+rt

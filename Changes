@@ -1,7 +1,10 @@
 Revision history for Perl extension WWW::NOS::Open.
 
-0.100 Sat Oct 20 17:18:18 UTC 2012
-    - TODO
+0.100 Wed Oct 31 23:03:29 UTC 2012
+    - Imporoved documentation
+    - Fixed a bug that made thumbnail URLs mandatory while the service uses
+      them optionally
+    - Changed default port of dummy server from 8888 to 18081
     - Added github repository to meta data
     - Switched version control from subversion to Github
       <https://github.com/ipenburg/WWW-NOS-Open>
@@ -10,7 +13,7 @@ Revision history for Perl extension WWW::NOS::Open.
     - Bumped minimal perl to 5.14 to get unicode right
 
 0.02  Thu Jan  13 21:54:02 2011
-    -improved documentation and refactoring
+    - improved documentation and refactoring
     - dates can now also be DateTime objects
     - fixed RT#64456, RT#64468, RT#64480
 

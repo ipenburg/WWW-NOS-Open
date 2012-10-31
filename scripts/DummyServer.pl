@@ -1,5 +1,5 @@
-#!/usr/bin/env perl    # -*- cperl; cperl-indent-level: 4 -*-
-## no critic qw(RestrictLongStrings ProhibitImplicitNewlines RequireASCII)
+#!/usr/bin/env perl -w   # -*- cperl; cperl-indent-level: 4 -*-
+## no critic qw(ProhibitCallsToUnexportedSubs RestrictLongStrings ProhibitImplicitNewlines RequireASCII)
 use strict;
 use warnings;
 
@@ -13,9 +13,9 @@ use Getopt::Long;
 use HTTP::Server::Brick;
 use HTTP::Status qw(:constants status_message);
 use Pod::Usage;
+use Pod::Usage::CommandLine;
 
 use Readonly;
-## no critic qw(ProhibitCallsToUnexportedSubs)
 Readonly::Scalar my $EMPTY           => q{};
 Readonly::Scalar my $SPACE           => q{ };
 Readonly::Scalar my $SLASH           => q{/};
@@ -30,7 +30,7 @@ Readonly::Scalar my $STRIP_QUERY     => qr{^/[?]}sxm;
 
 Readonly::Array my @GETOPT_CONFIG =>
   qw(no_ignore_case bundling auto_version auto_help);
-Readonly::Array my @GETOPTIONS => ( q{port|p=s}, q{help|h}, q{verbose|v+}, );
+Readonly::Array my @GETOPTIONS => ( q{port|p=s}, q{verbose|v+}, );
 Readonly::Hash my %OPTS_DEFAULT => ( 'port' => $CONNECTOR_PORT, );
 Readonly::Hash my %OUTPUT => (
     'json' => q{application/json},
@@ -610,7 +610,6 @@ q{{"unauthorized, invalid key":{"error":{"code":201,"message":"Invalid key"}}}},
     'forbidden' =>
 q{{"forbidden, rate limit":{"error":{"code":301,"message":"Rate limit, max requests per minute is set at 60"}}}},
 );
-## use critic
 
 Getopt::Long::Configure(@GETOPT_CONFIG);
 my %opts = %OPTS_DEFAULT;
@@ -640,52 +639,36 @@ sub main {
             $OUTPUT{ lc $param{'output'} } . $CHARSET );
         $res->header(
             'Status',
-            ## no critic qw(ProhibitCallsToUnexportedSubs)
             HTTP::Status::HTTP_BAD_REQUEST
-              ## use critic
               . $SPACE
-              ## no critic qw(ProhibitCallsToUnexportedSubs)
               . status_message(HTTP::Status::HTTP_BAD_REQUEST),
         );
-        ## use critic
-        ## no critic qw(ProhibitCallsToUnexportedSubs)
         $res->code(HTTP::Status::HTTP_BAD_REQUEST);
-        ## use critic
     }
     $res->header( 'Content-Type', $OUTPUT{ lc $param{'output'} } . $CHARSET );
     if ( !defined $param{'key'} ) {
         $res->add_content_utf8( $ERROR{'bad_request_missing'} );
         $res->header(
             'Status',
-            ## no critic qw(ProhibitCallsToUnexportedSubs)
             HTTP::Status::HTTP_BAD_REQUEST
-              ## use critic
               . $SPACE
-              ## no critic qw(ProhibitCallsToUnexportedSubs)
               . status_message(HTTP::Status::HTTP_BAD_REQUEST),
         );
-        ## use critic
-        ## no critic qw(ProhibitCallsToUnexportedSubs)
         $res->code(HTTP::Status::HTTP_BAD_REQUEST);
-        ## use critic
     }
     if ( $param{'key'} ne $API_KEY ) {
         $res->header(
             'Status',
-            ## no critic qw(ProhibitCallsToUnexportedSubs)
             HTTP::Status::HTTP_UNAUTHORIZED
-              ## use critic
               . $SPACE
-              ## no critic qw(ProhibitCallsToUnexportedSubs)
               . status_message(HTTP::Status::HTTP_UNAUTHORIZED),
         );
-        ## use critic
 
+        ## no critic qw(ProhibitFlagComments)
   # TODO: This also sets the content, which we don't want:
   # (this is a TODO in HTTP::Server::Brick, so fixing it there is the way to go)
-        ## no critic qw(ProhibitCallsToUnexportedSubs)
-        $res->code(HTTP::Status::HTTP_UNAUTHORIZED);
         ## use critic
+        $res->code(HTTP::Status::HTTP_UNAUTHORIZED);
         $res->add_content_utf8( $ERROR{'unauthorized'} );
     }
     $requests++;
@@ -695,18 +678,12 @@ sub main {
         $res->add_content_utf8( $ERROR{'forbidden'} );
         $res->header(
             'Status',
-            ## no critic qw(ProhibitCallsToUnexportedSubs)
             HTTP::Status::HTTP_FORBIDDEN
-              ## use critic
               . $SPACE
-              ## no critic qw(ProhibitCallsToUnexportedSubs)
               . status_message(HTTP::Status::HTTP_FORBIDDEN),
         );
-        ## use critic
         $requests = 0;
-        ## no critic qw(ProhibitCallsToUnexportedSubs)
         $res->code(HTTP::Status::HTTP_FORBIDDEN);
-        ## use critic
     }
     if ( defined $param{'index'} && $param{'index'} eq q{version} ) {
         $res->add_content_utf8( $RESPONSE{'version'}->{ lc $param{'output'} } );
@@ -733,17 +710,18 @@ __END__
 
 =encoding utf8
 
-=for stopwords Roland van Ipenburg DummyServer.pl
-
 =head1 NAME
 
-=head1 VERSION
-
-This document describes C<DummyServer.pl> version 0.01
+DummyServer.pl - a dummy NOS Open server to test the API against
 
 =head1 USAGE
 
-    ./DummyServer.pl --port=PORT
+B<./DummyServer.pl> [B<--port=PORT>]
+
+=head1 DESCRIPTION
+
+For debugging against a server that isn't the NOS Open live server, this script
+provides the same API against limited content.
 
 =head1 REQUIRED ARGUMENTS
 
@@ -753,7 +731,25 @@ None.
 
 =over 4
 
-=item B<--port> port number to listen on.
+=item B< -?, -h, --help>
+
+Show help
+
+=item B< -m, --man>
+
+Show manpage
+
+=item B< -v, --verbose>
+
+Be more verbose
+
+=item B<--version>
+
+Show version and license
+
+=item B<--port>
+
+Port number to listen on, defaults to port 18081
 
 =back
 
@@ -765,25 +761,19 @@ None.
 
 =head1 DEPENDENCIES
 
-=over 4
-
-=item * L<CGI|CGI>
-
-=item * L<Getopt::Long|Getopt::Long>
-
-=item * L<HTTP::Server::Brick|HTTP::Server::Brick>
-
-=item * L<Pod::Usage|Pod::Usage>
-
-=item * L<Readonly|Readonly>
-
-=back
+Perl 5.14.0, CGI, Getopt::Long, HTTP::Server::Brick, Pod::Usage,
+Pod::Usage::CommandLine, Readonly, WWW::NOS::Open
 
 =head1 INCOMPATIBILITIES
 
+Version 2 of the API is not provided.
+
 =head1 BUGS AND LIMITATIONS
 
-=head1 DESCRIPTION
+Only version 1 of the API is provided.
+
+Please report any bugs or feature requests at
+L<RT for rt.cpan.org|https://rt.cpan.org/Dist/Display.html?Queue=WWW-NOS-Open>.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
@@ -791,37 +781,37 @@ Using the defaults it starts the HTTP service on port 18081.
 
 =head1 AUTHOR
 
-Roland van Ipenburg  C<< <ipenburg@xs4all.nl> >>
+Roland van Ipenburg, E<lt>ipenburg@xs4all.nlE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-    Copyright 2011 Roland van Ipenburg
+Copyright 2012 by Roland van Ipenburg
 
-    This library is free software; you can redistribute it and/or modify
-    it under the same terms as Perl itself, either Perl version 5.12.2 or,
-    at your option, any later version of Perl 5 you may have available.
+This program is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.14.0 or,
+at your option, any later version of Perl 5 you may have available.
 
 =head1 DISCLAIMER OF WARRANTY
 
-    BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
-    FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
-    OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
-    PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
-    EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
-    ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
-    YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
-    NECESSARY SERVICING, REPAIR, OR CORRECTION.
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
+ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
+YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
+NECESSARY SERVICING, REPAIR, OR CORRECTION.
 
-    IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
-    WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-    REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENSE, BE
-    LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
-    OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
-    THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
-    RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
-    FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
-    SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
-    SUCH DAMAGES.
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENSE, BE
+LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
+THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.
 
 =cut

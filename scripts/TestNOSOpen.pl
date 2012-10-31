@@ -1,4 +1,4 @@
-#!/usr/bin/env perl    # -*- cperl; cperl-indent-level: 4 -*-
+#!/usr/bin/env perl -w    # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -13,6 +13,7 @@ use HTTP::Server::Brick;
 use lib q{../lib};
 use Getopt::Long;
 use Pod::Usage;
+use Pod::Usage::CommandLine;
 use WWW::NOS::Open;
 
 use Readonly;
@@ -25,7 +26,7 @@ Readonly::Scalar my $SLASH          => q{/};
 
 Readonly::Array my @GETOPT_CONFIG =>
   qw(no_ignore_case bundling auto_version auto_help);
-Readonly::Array my @GETOPTIONS => ( q{port|p=s}, q{help|h}, q{verbose|v+}, );
+Readonly::Array my @GETOPTIONS => ( q{port|p=s}, q{verbose|v+}, );
 Readonly::Hash my %OPTS_DEFAULT => ( 'port' => $CONNECTOR_PORT, );
 
 Getopt::Long::Configure(@GETOPT_CONFIG);
@@ -311,13 +312,17 @@ __END__
 
 =head1 NAME
 
-=head1 VERSION
-
-This document describes C<TestNOSOpen.pl> version 0.100
+TestNOSOpen.pl - an HTTP server that shows content through the NOS Open API
 
 =head1 USAGE
 
-    ./TestNOSOpen.pl --apikey=APIKEY
+B<./TestNOSOpen.pl> [B<--apikey=APIKEY>] [B<--port=PORT>]
+
+=head1 DESCRIPTION
+
+This script starts an HTTP service which presents an HTML page that interacts
+with the Open NOS service giving examples of the available API calls. For more
+information see: L<http://open.nos.nl/|http://open.nos.nl/>
 
 =head1 REQUIRED ARGUMENTS
 
@@ -327,7 +332,29 @@ None.
 
 =over 4
 
-=item B<--apikey> API key to use Open NOS
+=item B< -?, -h, --help>
+
+Show help
+
+=item B< -m, --man>
+
+Show manpage
+
+=item B< -v, --verbose>
+
+Be more verbose
+
+=item B<--version>
+
+Show version and license
+
+=item B<--apikey>
+
+API key to use Open NOS with
+
+=item B<--port>
+
+Port number to listen on, defaults to port 8081
 
 =back
 
@@ -337,34 +364,24 @@ None.
 
 =head1 CONFIGURATION
 
+The account belonging to the API key must be configured to allow access to the
+API from the IP range you are accessing the service from.
+
 =head1 DEPENDENCIES
 
-=over 4
-
-=item * L<CGI|CGI>
-
-=item * L<Getopt::Long|Getopt::Long>
-
-=item * L<HTTP::Server::Brick|HTTP::Server::Brick>
-
-=item * L<Pod::Usage|Pod::Usage>
-
-=item * L<Readonly|Readonly>
-
-=back
+Perl 5.14.0, CGI, Getopt::Long, HTTP::Server::Brick, Pod::Usage,
+Pod::Usage::CommandLine, Readonly, WWW::NOS::Open
 
 =head1 INCOMPATIBILITIES
 
+Version 2 of the API is not used.
+
 =head1 BUGS AND LIMITATIONS
+
+Only version 1 of the API is used.
 
 Please report any bugs or feature requests at
 L<RT for rt.cpan.org|https://rt.cpan.org/Dist/Display.html?Queue=WWW-NOS-Open>.
-
-=head1 DESCRIPTION
-
-This starts an HTTP service which presents an HTML page that interacts with
-the Open NOS service.  For more information see:
-L<http://open.nos.nl/|http://open.nos.nl/>
 
 =head1 CONFIGURATION AND ENVIRONMENT
 

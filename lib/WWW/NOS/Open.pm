@@ -416,8 +416,7 @@ searchengine useragent DateTime XML
 
 =head1 NAME
 
-WWW::NOS::Open - Perl framework for the
-L<Open NOS|http://open.nos.nl/> REST API.
+WWW::NOS::Open - Perl framework for the Open NOS REST API.
 
 =head1 VERSION
 
@@ -431,7 +430,9 @@ This document describes WWW::NOS::Open version 0.100.
 
 =head1 DESCRIPTION
 
-Wrapper around the REST API to get data from Open NOS into Perl.
+The L<Dutch public broadcasting foundation NOS|http:://www.nos.nl> provides a
+REST API to their content. This module provides a wrapper around that API to
+handle data from the Open NOS platform with Perl.
 
 =head1 SUBROUTINES/METHODS
 
@@ -539,16 +540,23 @@ object.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
+To use this module with the live content of NOS Open you need an API key which
+can be obtained by registering at L<Open NOS|http://open.nos.nl/registratie/>
+and configure your account there with the IP range you'll be accessing their
+service from.
+
 This module uses the environment variable C<NOSOPEN_SERVER> to specify a
-server that is not the default Open NOS live server at
+server URL that is not the default Open NOS live server at
 L<http://open.nos.nl|http://open.nos.nl>.
 
 The useragent identifier used in the request to the REST API is
-C<WWW::NOS::Open/0.01>.
+C<WWW::NOS::Open/0.100>.
 
 =head1 DEPENDENCIES
 
 =over 4
+
+=item * perl 5.14 
 
 =item * L<Date::Calc|Date::Calc>
 
@@ -620,14 +628,14 @@ L<RT for rt.cpan.org|https://rt.cpan.org/Dist/Display.html?Queue=WWW-NOS-Open>.
 
 =head1 AUTHOR
 
-Roland van Ipenburg  C<< <ipenburg@xs4all.nl> >>
+Roland van Ipenburg, E<lt>ipenburg@xs4all.nlE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2011 by Roland van Ipenburg
+Copyright 2012 by Roland van Ipenburg
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.12.2 or,
+it under the same terms as Perl itself, either Perl version 5.14.0 or,
 at your option, any later version of Perl 5 you may have available.
 
 =head1 DISCLAIMER OF WARRANTY

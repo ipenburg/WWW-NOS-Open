@@ -53,7 +53,7 @@ while ( my $date = shift @dates ) {
     has $UNDER
       . $date => (
         'is'       => 'ro',
-        'isa'      => NOSDateTime,
+        'isa'      => 'WWW::NOS::Open::TypeDef::NOSDateTime',
         'coerce'   => 1,
         'reader'   => $GETTER . $UNDER . $date,
         'init_arg' => $date,
@@ -66,7 +66,7 @@ while ( my $uri = shift @uris ) {
     has $UNDER
       . $uri => (
         'is'       => 'ro',
-        'isa'      => NOSURI || Undef,
+        'isa'      => 'WWW::NOS::Open::TypeDef::NOSURI | Undef',
         'coerce'   => 1,
         'reader'   => $GETTER . $UNDER . $uri,
         'init_arg' => $uri,

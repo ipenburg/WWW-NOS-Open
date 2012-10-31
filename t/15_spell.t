@@ -26,7 +26,9 @@ Ipenburg
 NOS
 RT
 Readonly
+TestNOSOpen
 apikey
 cpan
 org
+pl
 rt

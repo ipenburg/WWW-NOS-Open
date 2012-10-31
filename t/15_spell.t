@@ -21,6 +21,7 @@ Test::Spelling::all_pod_files_spelling_ok();
 __DATA__
 API
 CGI
+DummyServer.pl
 Ipenburg
 NOS
 RT

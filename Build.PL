@@ -6,7 +6,7 @@ Module::Build->new(
     license     => 'perl',
     dist_author => 'Roland van Ipenburg <ipenburg@xs4all.nl>',
     requires    => {
-        'perl'                 => '5.14.0',
+        'perl'                         => '5.14.0',
         'Date::Calc'                   => 0,
         'Date::Format'                 => 0,
         'Date::Parse'                  => 0,
@@ -15,7 +15,7 @@ Module::Build->new(
         'HTTP::Headers'                => 0,
         'HTTP::Request'                => 0,
         'HTTP::Status'                 => 0,
-		'JSON'						 => 0,
+        'JSON'                         => 0,
         'Log::Log4perl'                => 0,
         'LWP::UserAgent'               => 0,
         'Moose'                        => 0,
@@ -31,21 +31,34 @@ Module::Build->new(
     },
     configure_requires => { 'Module::Build' => 0.40, },
     build_requires     => {
-		'Test::More'    => 0.81,
-		'Test::NoWarnings'    => 0.81,
-	},
-    recommends         => {
-        'CGI'          => 0,
-        'Getopt::Long'          => 0,
-        'HTTP::Server::Brick'          => 0,
-        'HTTP::Status'          => 0,
-        'Pod::Usage'          => 0,
+        'Test::More'       => 0.81,
+        'Test::NoWarnings' => 0.81,
+    },
+    recommends => {
+        'CGI'                        => 0,
+        'Getopt::Long'               => 0,
+        'HTTP::Server::Brick'        => 0,
+        'HTTP::Status'               => 0,
+        'Perl::Critic::Bangs'        => 0,
+        'Perl::Critic::Itch'         => 0,
+        'Perl::Critic::More'         => 0,
+        'Perl::Critic::Nits'         => 0,
+        'Perl::Critic::Pulp'         => 0,
+        'Perl::Critic::StricterSubs' => 0,
+        'Perl::Critic::Tics'         => 0,
+        'Pod::Usage'                 => 0,
+        'Pod::Usage::CommandLine'    => 0,
+        'Test::Kwalitee'             => 0,
+        'Test::Perl::Critic'         => 0,
+        'Test::Pod'                  => 1.41,
+        'Test::Pod::Coverage'        => 1.00,
+        'Test::TestCoverage'         => 0.08,
+        'Test::CheckManifest'        => 1.01,
     },
     script_files => [ qw(scripts/DummyServer.pl scripts/TestNOSOpen.pl), ],
     sign         => 1,
     meta_merge   => {
-        resources => {
-            repository => 'https://github.com/ipenburg/WWW-NOS-Open'
-        }
+        resources =>
+          { repository => 'https://github.com/ipenburg/WWW-NOS-Open' }
     },
 )->create_build_script;

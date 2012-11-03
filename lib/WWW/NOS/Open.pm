@@ -372,14 +372,18 @@ sub _do_request {
             ## no critic qw(RequireExplicitInclusion)
             NOSOpenUnauthorizedException->throw(
                 ## use critic
-                'error' => $json->decode( $response->decoded_content ),
+                'error' => $json->decode(
+                    $response->decoded_content || $response->content,
+                ),
             );
         }
         elsif ( $response->code == HTTP_FORBIDDEN ) {
             ## no critic qw(RequireExplicitInclusion)
             NOSOpenForbiddenException->throw(
                 ## use critic
-                'error' => $json->decode( $response->decoded_content ),
+                'error' => $json->decode(
+                    $response->decoded_content || $response->content,
+                ),
             );
         }
     }

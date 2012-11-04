@@ -1,4 +1,4 @@
-package WWW::NOS::Open::DayGuide 0.100;   # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::DayGuide 0.101;   # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -54,7 +54,7 @@ WWW::NOS::Open::DayGuide - client side television or radio program guide
 
 =head1 VERSION
 
-This document describes WWW::NOS::Open::DayGuide version 0.100.
+This document describes WWW::NOS::Open::DayGuide version 0.101.
 
 =head1 SYNOPSIS
 

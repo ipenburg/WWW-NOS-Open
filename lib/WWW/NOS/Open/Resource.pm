@@ -1,4 +1,4 @@
-package WWW::NOS::Open::Resource 0.100;   # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Resource 0.101;   # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -100,7 +100,7 @@ WWW::NOS::Open::Resource - client side resource in the Open NOS REST API.
 
 =head1 VERSION
 
-This document describes WWW::NOS::Open::Resource version 0.100.
+This document describes WWW::NOS::Open::Resource version 0.101.
 
 =head1 SYNOPSIS
 

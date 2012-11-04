@@ -1,4 +1,4 @@
-WWW::NOS::Open version 0.100
+WWW::NOS::Open version 0.101
 ============================
 
 This is a framework that makes makes data from the Open NOS REST API
@@ -8,10 +8,10 @@ INSTALLATION
 
 To install this module type the following:
 
-   perl Makefile.PL
-   make
-   make test
-   make install
+   perl Build.PL
+   ./Build
+   ./Build test
+   ./Build install
 
 WARNING: Running the test using your API key against the live server will
 temporarily hit your rate limit.
@@ -29,7 +29,7 @@ available on localhost port 8081.
 
 Starts a dummy HTTP server that serves canned requests as described in the
 documentation of Open NOS to test the implementation against a non-live server.
-Defaults to port 8888 when no other port is given using the --port option. The
+Defaults to port 18081 when no other port is given using the --port option. The
 API key to use with this server is "TEST" and every 100 requests it returns a
 quota exceeded error.
 
@@ -72,7 +72,7 @@ COPYRIGHT AND LICENCE
 Copyright 2012 Roland van Ipenburg
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.12.2 or,
+it under the same terms as Perl itself, either Perl version 5.14.0 or,
 at your option, any later version of Perl 5 you may have available.
 
 DISCLAIMER OF WARRANTY

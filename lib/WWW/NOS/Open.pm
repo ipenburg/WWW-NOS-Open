@@ -1,4 +1,4 @@
-package WWW::NOS::Open 0.100;    # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open 0.101;    # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -421,7 +421,7 @@ WWW::NOS::Open - Perl framework for the Open NOS REST API.
 
 =head1 VERSION
 
-This document describes WWW::NOS::Open version 0.100.
+This document describes WWW::NOS::Open version 0.101.
 
 =head1 SYNOPSIS
 
@@ -551,7 +551,7 @@ specify a server URL that is not the default Open NOS live service at
 L<http://open.nos.nl|http://open.nos.nl>.
 
 The user agent identifier used in the request to the REST API is
-C<WWW::NOS::Open/0.100>.
+C<WWW::NOS::Open/0.101>.
 
 =head1 DEPENDENCIES
 

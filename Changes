@@ -1,5 +1,8 @@
 Revision history for Perl extension WWW::NOS::Open.
 
+0.101 Sun Nov  4 11:25:26 UTC 2012
+    - TODO
+
 0.100 Sun Nov  4 11:25:26 UTC 2012
     - Handle 401 and 403 with missing encodings
     - Configured recommended modules

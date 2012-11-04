@@ -1,4 +1,4 @@
-package WWW::NOS::Open::Exceptions 0.100; # -*- cperl; cperl-indent-level: 4 -*-
+package WWW::NOS::Open::Exceptions 0.101; # -*- cperl; cperl-indent-level: 4 -*-
 use strict;
 use warnings;
 
@@ -25,7 +25,7 @@ WWW::NOS::Open::Exceptions -  exception information for the Open NOS REST API.
 
 =head1 VERSION
 
-This document describes WWW::NOS::Open::Exceptions version 0.100.
+This document describes WWW::NOS::Open::Exceptions version 0.101.
 
 =head1 SYNOPSIS
 

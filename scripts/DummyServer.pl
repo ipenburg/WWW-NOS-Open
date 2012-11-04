@@ -6,7 +6,7 @@ use warnings;
 use utf8;
 use 5.014000;
 
-our $VERSION = '0.100';
+our $VERSION = '0.101';
 
 use CGI qw/:all/;
 use Getopt::Long;

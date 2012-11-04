@@ -21,12 +21,16 @@ Test::Spelling::all_pod_files_spelling_ok();
 __DATA__
 API
 CGI
+DateTime
 DummyServer.pl
 Ipenburg
+JSON
 NOS
+PHP
 RT
 Readonly
 TestNOSOpen
+URI
 apikey
 cpan
 org

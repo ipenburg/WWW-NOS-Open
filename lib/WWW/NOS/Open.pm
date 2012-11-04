@@ -415,9 +415,6 @@ __END__
 
 =encoding utf8
 
-=for stopwords Roland van Ipenburg API NOS Readonly PHP JSON URI 
-searchengine useragent DateTime XML
-
 =head1 NAME
 
 WWW::NOS::Open - Perl framework for the Open NOS REST API.
@@ -436,7 +433,7 @@ This document describes WWW::NOS::Open version 0.100.
 
 The L<Dutch public broadcasting foundation NOS|http:://www.nos.nl> provides a
 REST API to their content. This module provides a wrapper around that API to
-handle data from the Open NOS platform with Perl.
+use data from the Open NOS platform with Perl.
 
 =head1 SUBROUTINES/METHODS
 
@@ -448,7 +445,7 @@ Create a new WWW::NOS::Open object.
 
 =item 1. The API key to use in the connection to the Open NOS service. You
 need to L<register at Open NOS|http://open.nos.nl/registratie/> to get an API
-key.
+key, and link your IP address to that account to do authorized requests.
 
 =back
 
@@ -495,7 +492,7 @@ C<sport>.  Defaults to the category C<nieuws>.
 
 =head2 C<search>
 
-Search the searchengine from L<NOS|http://www.nos.nl> for keywords. Returns
+Search the search engine from L<NOS|http://www.nos.nl> for keywords. Returns
 a L<WWW::NOS::Open::Results|WWW::NOS::Open::Results> object with a maximum of
 25 items.
 
@@ -544,23 +541,23 @@ object.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
-To use this module with the live content of NOS Open you need an API key which
+To use this module with the live content of Open NOS you need an API key which
 can be obtained by registering at L<Open NOS|http://open.nos.nl/registratie/>
-and configure your account there with the IP range you'll be accessing their
-service from.
+and then configure your account there with the IP range you'll be accessing
+the service from.
 
-This module uses the environment variable C<NOSOPEN_SERVER> to specify a
-server URL that is not the default Open NOS live server at
+This module can use the optional environment variable C<NOSOPEN_SERVER> to
+specify a server URL that is not the default Open NOS live service at
 L<http://open.nos.nl|http://open.nos.nl>.
 
-The useragent identifier used in the request to the REST API is
+The user agent identifier used in the request to the REST API is
 C<WWW::NOS::Open/0.100>.
 
 =head1 DEPENDENCIES
 
-=over 4
+=over
 
-=item * perl 5.14 
+=item * perl 5.14
 
 =item * L<Date::Calc|Date::Calc>
 
@@ -584,9 +581,7 @@ C<WWW::NOS::Open/0.100>.
 
 =item * L<Readonly|Readonly>
 
-=item * L<URI|URI>
-
-=item * L<URI::Escape|URI::Escape>
+=item * L<URI|URI>, L<URI::Escape|URI::Escape>
 
 =item * L<WWW::NOS::Open::Article|WWW::NOS::Open::Article>
 
@@ -616,9 +611,30 @@ C<WWW::NOS::Open/0.100>.
 
 =head1 INCOMPATIBILITIES
 
+None.
+
 =head1 DIAGNOSTICS
 
-This module uses Log::Log4perl.
+Exceptions in the form of an L<Exception::Class|Exception::Class> are thrown
+when the Open NOS service reports an exception:
+
+=head2 C<NOSOpenUnauthorizedException>
+
+When a request was made without a valid API key, or from an IP address not
+configured to be valid for that API key.
+
+=head2 C<NOSOpenExceededRangeException>
+
+When the time period for a guide request exceeds the supported range of 14
+days.
+
+=head2 C<NOSOpenInternalServerErrorException>
+
+When an internal server error has occurred in the Open NOS service.
+
+=head2 C<NOSOpenBadRequestException>
+
+When the Open NOS service reports the request had bad syntax.
 
 =head1 BUGS AND LIMITATIONS
 

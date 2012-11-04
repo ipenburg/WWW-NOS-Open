@@ -22,12 +22,9 @@ __END__
 
 =encoding utf8
 
-=for stopwords Roland van Ipenburg API NOS DateTime URI URL HTML
-
 =head1 NAME
 
-WWW::NOS::Open::Video - Class representing a client side video in the
-L<Open NOS|http://open.nos.nl/> REST API.
+WWW::NOS::Open::Video - client side video in the Open NOS REST API.
 
 =head1 VERSION
 
@@ -52,7 +49,6 @@ Create a new video object.
 =item 1. A hash containing the properties and their values.
 
 =back
-
 
 =head2 C<get_id>
 
@@ -129,14 +125,14 @@ L<RT for rt.cpan.org|https://rt.cpan.org/Dist/Display.html?Queue=WWW-NOS-Open>.
 
 =head1 AUTHOR
 
-Roland van Ipenburg  C<< <ipenburg@xs4all.nl> >>
+Roland van Ipenburg, E<lt>ipenburg@xs4all.nlE<gt>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2011 by Roland van Ipenburg
+Copyright 2012 by Roland van Ipenburg
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.12.2 or,
+it under the same terms as Perl itself, either Perl version 5.14.0 or,
 at your option, any later version of Perl 5 you may have available.
 
 =head1 DISCLAIMER OF WARRANTY

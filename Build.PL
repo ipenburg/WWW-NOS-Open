@@ -52,6 +52,7 @@ Module::Build->new(
         'Test::Perl::Critic'         => 0,
         'Test::Pod'                  => 1.41,
         'Test::Pod::Coverage'        => 1.00,
+		'Test::Spelling'             => 0,
         'Test::TestCoverage'         => 0.08,
         'Test::CheckManifest'        => 1.01,
     },

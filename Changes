@@ -1,7 +1,9 @@
 Revision history for Perl extension WWW::NOS::Open.
 
-0.100 Wed Oct 31 23:03:29 UTC 2012
-    - Imporoved documentation
+0.100 Sun Nov  4 11:25:26 UTC 2012
+    - Handle 401 and 403 with missing encodings
+    - Configured recommended modules
+    - Improved documentation
     - Fixed a bug that made thumbnail URLs mandatory while the service uses
       them optionally
     - Changed default port of dummy server from 8888 to 18081

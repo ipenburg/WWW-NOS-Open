@@ -171,7 +171,7 @@ sub _parse_resource {
     my %param;
     while ( my $prop = shift @props ) {
         $param{$prop} =
-          ( ref $hr_resource->{$prop}[0] eq q{HASH} )
+          ( q{HASH} eq ref $hr_resource->{$prop}[0] )
           ? %{ $hr_resource->{$prop}[0] }
           : $hr_resource->{$prop}[0];
     }
@@ -266,9 +266,9 @@ sub _parse_dayguide {
     my %param;
     while ( my $prop = shift @props ) {
         $param{$prop} =
-          ( ref $hr_dayguide->{$prop} eq q{ARRAY} )
+          ( q{ARRAY} eq ref $hr_dayguide->{$prop} )
           ? (
-            ( ref $hr_dayguide->{$prop}[0] eq q{HASH} )
+            ( q{HASH} eq ref $hr_dayguide->{$prop}[0] )
             ? %{ $hr_dayguide->{$prop}[0] }
             : $hr_dayguide->{$prop}[0]
           )
@@ -312,7 +312,7 @@ sub _get_broadcasts {
     ( defined $end )   || ( $end   = $default_end );
 
     foreach ( $start, $end ) {
-        ( ref $_ eq q{DateTime} ) && ( $_ = $_->ymd );
+        ( q{DateTime} eq ref ) && ( $_ = $_->ymd );
     }
     if ( Delta_Days( split /$DASH/smx, qq{$start$DASH$end} ) > $MAX_RANGE ) {
         ## no critic qw(RequireExplicitInclusion)
@@ -405,15 +405,15 @@ with 'WWW::NOS::Open::Interface';
 
 no Moose;
 
-## no critic qw(RequireExplicitInclusion)
 __PACKAGE__->meta->make_immutable;
-## use critic
 
 1;
 
 __END__
 
 =encoding utf8
+
+=for stopwords DateTime perl JSON Readonly URI PHP Ipenburg MERCHANTABILITY
 
 =head1 NAME
 

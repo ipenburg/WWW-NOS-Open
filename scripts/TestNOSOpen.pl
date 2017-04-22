@@ -310,6 +310,8 @@ __END__
 
 =encoding utf8
 
+=for stopwords DateTime URI TestNOSOpen.pl manpage apikey Readonly Ipenburg MERCHANTABILITY
+
 =head1 NAME
 
 TestNOSOpen.pl - an HTTP server that shows content through the NOS Open API

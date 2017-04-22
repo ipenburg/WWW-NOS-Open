@@ -20,6 +20,8 @@ __END__
 
 =encoding utf8
 
+=for stopwords Ipenburg MERCHANTABILITY
+
 =head1 NAME
 
 WWW::NOS::Open::Interface - Interface for the Open NOS REST API.

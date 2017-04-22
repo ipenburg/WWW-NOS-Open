@@ -3,7 +3,6 @@ Changes
 MANIFEST
 MANIFEST.SKIP
 README
-SIGNATURE
 lib/WWW/NOS/Open.pm
 lib/WWW/NOS/Open/Article.pm
 lib/WWW/NOS/Open/AudioFragment.pm
@@ -33,5 +32,3 @@ t/13_critic.t
 t/14_kwalitee.t
 t/15_spell.t
 t/perlcriticrc
-META.yml
-META.json

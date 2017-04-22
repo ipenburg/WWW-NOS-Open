@@ -12,15 +12,15 @@ extends 'WWW::NOS::Open::Resource';
 
 no Moose;
 
-## no critic qw(RequireExplicitInclusion)
 __PACKAGE__->meta->make_immutable;
-## use critic
 
 1;
 
 __END__
 
 =encoding utf8
+
+=for stopwords DateTime URI Ipenburg MERCHANTABILITY
 
 =head1 NAME
 

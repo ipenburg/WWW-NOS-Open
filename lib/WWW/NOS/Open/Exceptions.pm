@@ -19,6 +19,8 @@ __END__
 
 =encoding utf8
 
+=for stopwords Ipenburg MERCHANTABILITY
+
 =head1 NAME
 
 WWW::NOS::Open::Exceptions -  exception information for the Open NOS REST API.

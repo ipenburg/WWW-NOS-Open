@@ -89,15 +89,15 @@ has '_keywords' => (
 
 no Moose;
 
-## no critic qw(RequireExplicitInclusion)
 __PACKAGE__->meta->make_immutable;
-## use critic
 
 1;
 
 __END__
 
 =encoding utf8
+
+=for stopwords DateTime URI Readonly Ipenburg MERCHANTABILITY
 
 =head1 NAME
 

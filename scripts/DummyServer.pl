@@ -685,7 +685,7 @@ sub main {
         $requests = 0;
         $res->code(HTTP::Status::HTTP_FORBIDDEN);
     }
-    if ( defined $param{'index'} && $param{'index'} eq q{version} ) {
+    if ( defined $param{'index'} && q{version} eq $param{'index'} ) {
         $res->add_content_utf8( $RESPONSE{'version'}->{ lc $param{'output'} } );
     }
     if ( defined $param{'latest'} ) {
@@ -693,7 +693,7 @@ sub main {
             $RESPONSE{ q{latest_} . $param{'latest'} }->{ lc $param{'output'} },
         );
     }
-    if ( defined $param{'search'} && $param{'search'} eq q{query} ) {
+    if ( defined $param{'search'} && q{query} eq $param{'search'} ) {
         $res->add_content_utf8( $RESPONSE{'search'}->{ lc $param{'output'} } );
     }
     if ( defined $param{'guide'} ) {
@@ -709,6 +709,8 @@ $server->start;
 __END__
 
 =encoding utf8
+
+=for stopwords DummyServer.pl manpage Readonly Ipenburg MERCHANTABILITY
 
 =head1 NAME
 
